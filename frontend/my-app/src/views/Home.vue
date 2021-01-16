@@ -1,17 +1,20 @@
 <template>
   <div class="home">
     <header>
-      <Navbar></Navbar>
+      <TopNavbar class="top"></TopNavbar>
+      <Navbar class = "bottom"></Navbar>
     </header>
   </div>
 </template>
 
 <script>
 import Navbar from "../components/Navbar.vue";
+import TopNavbar from "../components/TopNavbar.vue";
 export default {
   name: "Home",
   components: {
     Navbar,
+    TopNavbar,
   },
 };
 </script>
@@ -27,9 +30,15 @@ body {
   font-family: "montserrat", sans-serif;
 }
 
-header {
+.bottom {
   width: 100vw;
   background-color: #222;
-  padding: 15px;
+  
+}
+
+.top {
+background-color: rgb(48, 48, 48);
+width: 100vw;
+
 }
 </style>

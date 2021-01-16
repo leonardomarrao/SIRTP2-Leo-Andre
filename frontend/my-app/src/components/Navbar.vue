@@ -49,7 +49,9 @@ export default {
 nav {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 nav .menu-item {
   color: white;
