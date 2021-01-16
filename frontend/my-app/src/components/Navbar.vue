@@ -1,10 +1,10 @@
 <template>
   <nav>
-    <div class="menu-item"><a href="#">Home</a></div>
-    <div class="menu-item"><a href="#"></a>Carlos</div>
+    <a class="btn" href="/pesquisa"><div class="menu-item">Home</div></a>
+    <a class="btn" href="/pesquisa"><div class="menu-item">Carlos</div></a>
     <Dropdown title="Services" :items="services" />
-    <div class="menu-item"><a href="#"></a>Rogerio</div>
-    <div class="menu-item"><a href="#"></a>Tiago</div>
+    <a class="btn" href="/pesquisa"><div class="menu-item">Rogerio</div></a>
+    <a class="btn" href="/pesquisa"><div class="menu-item">Tiago</div></a>
   </nav>
 </template>
 
@@ -18,22 +18,22 @@ export default {
       services: [
         {
           title: "br",
-          link: "#",
+          link: "/pesquisa",
         },
 
         {
           title: "é",
-          link: "#",
+          link: "/pesquisa",
         },
 
         {
           title: "um",
-          link: "#",
+          link: "/pesquisa",
         },
 
         {
           title: "deus",
-          link: "#",
+          link: "/pesquisa",
         },
       ],
     };
@@ -42,6 +42,10 @@ export default {
 </script>
 
 <style>
+.btn {
+  text-decoration: none;
+}
+
 nav {
   display: flex;
   align-items: center;
@@ -59,6 +63,7 @@ nav .menu-item {
 
 nav .menu-item.active,
 nav .menu-item:hover {
+  cursor: pointer;
   background-color: #444;
   border-bottom-color: red;
 }
