@@ -59,6 +59,8 @@ nav .menu-item {
 
 nav .menu-item.active,
 nav .menu-item:hover {
+  
+  cursor: pointer;  
   background-color: #444;
   border-bottom-color: red;
 }
