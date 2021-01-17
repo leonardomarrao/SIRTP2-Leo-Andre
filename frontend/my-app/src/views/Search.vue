@@ -1,5 +1,48 @@
 <template>
-  <div class="search">
-    <h1>This is a search page</h1>
+  <div class="home">
+    <header>
+      <TopNavbar class="top"></TopNavbar>
+      <Navbar class = "bottom"></Navbar>
+      <p>Procurando para a plataforma {{$route.params.plataforma}}</p>
+    </header>
   </div>
 </template>
+
+<script>
+import Navbar from "../components/Navbar.vue";
+import TopNavbar from "../components/TopNavbar.vue";
+export default {
+  name: "Home",
+  components: {
+    Navbar,
+    TopNavbar,
+  },
+};
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "montserrat", sans-serif;
+}
+
+.bottom {
+  width: 100vw;
+  background-color: rgb(156, 156, 156);
+  
+}
+
+.top {
+  background-color: rgb(82, 82, 82);
+  width: 100vw;
+}
+
+.plataformahome {
+  margin: 200px;
+}
+</style>

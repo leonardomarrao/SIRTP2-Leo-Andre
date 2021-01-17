@@ -44,6 +44,18 @@ app.get('/produto/display/plataforma/:plataforma', async(req, res) => {
 
 });
 
+app.get('/produto/display/consola/:consola', async(req, res) => {
+
+    try {
+        let results = await db.displayProdutoConsola(req.params.consola);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 app.get('/produto/display/categoria/:categoria', async(req, res) => {
 
     try {
@@ -149,7 +161,7 @@ app.put('/produto/:id/updateativo', async(req, res) => {
 
 app.post('/produto/insert', async(req, res) => {
     try {
-        let results = await db.insertProduto(req.body.nome, req.body.categoria, req.body.preco, req.body.stock, req.body.descricao, req.body.plataforma, req.body.classificacao, req.body.genero, req.body.imagem, req.body.ativo);
+        let results = await db.insertProduto(req.body.nome, req.body.categoria, req.body.preco, req.body.stock, req.body.descricao, req.body.plataforma, req.body.consola, req.body.classificacao, req.body.genero, req.body.imagem, req.body.ativo);
         res.json(results);
     } catch (error) {
         console.log(error);

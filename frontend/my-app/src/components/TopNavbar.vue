@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <img class="topN" src="../assets/logo.png" />
+    <a href="/" class="btnhome"><img class="topN" src="../assets/logo.png" /></a>
     <div class="container">
       <input
         class="pesquisa"
@@ -33,6 +33,12 @@ img {
   justify-content: right;
   height: 30px;
   border-radius: 5px;
+}
+
+.btnhome {
+  cursor: pointer;
+  background: transparent;
+  border: none !important;
 }
 </style>
 

@@ -47,6 +47,17 @@ sirtp2db.displayProdutoPlataforma = (plataforma) => {
     });
 };
 
+sirtp2db.displayProdutoConsola = (consola) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM produto WHERE consola = ? AND stock <> 0 AND ativo <> 0`, [consola],(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 sirtp2db.displayProdutoCategoria = (categoria) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM produto WHERE categoria = ? AND stock <> 0 AND ativo <> 0`, [categoria],(err, results) => {
@@ -156,10 +167,10 @@ sirtp2db.updateAtivoProduto = (ativo, id) => {
 
 };
 
-sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, classificacao, genero, imagem, ativo) => {
+sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo) => {
 
     return new Promise((resolve,reject) => {
-        pool.query(`INSERT INTO produto (nome, categoria, preco, stock, descricao, plataforma, classificacao, genero, imagem, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [nome, categoria, preco, stock, descricao, plataforma, classificacao, genero, imagem, ativo],(err, results) => {
+        pool.query(`INSERT INTO produto (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo],(err, results) => {
             if(err) {
                 return reject(err);
             }

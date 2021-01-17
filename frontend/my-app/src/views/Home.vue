@@ -32,12 +32,12 @@ body {
 
 .bottom {
   width: 100vw;
-  background-color: #222;
+  background-color: rgb(156, 156, 156);
   
 }
 
 .top {
-background-color: rgb(48, 48, 48);
+background-color: rgb(82, 82, 82);
 width: 100vw;
 
 }

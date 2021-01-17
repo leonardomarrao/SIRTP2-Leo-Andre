@@ -1,14 +1,15 @@
 <template>
   <nav>
-    <a class="btn" href="/pesquisa"><div class="menu-item">Home</div></a>
-    <a class="btn" href="/pesquisa"><div class="menu-item">Carlos</div></a>
-    <Dropdown title="Services" :items="services" />
-    <a class="btn" href="/pesquisa"><div class="menu-item">Rogerio</div></a>
-    <a class="btn" href="/pesquisa"><div class="menu-item">Tiago</div></a>
+    <a class="btn" href="/pesquisa/playstation"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></a>
+    <a class="btn" href="/pesquisa/xbox"><div class="menu-item"><img class="bottonNimg" src="../assets/xboxlogo.png"/></div></a>
+    <a class="btn" href="/pesquisa/nintendo"><div class="menu-item"><img class="bottonNimg" src="../assets/nintendologo.png"/></div></a>
+    <a class="btn" href="/pesquisa/pc"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></a>
+    <a class="btn" href="/pesquisa/retro"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></a>
   </nav>
 </template>
 
 <script>
+/*
 import Dropdown from "../components/Dropdown.vue";
 export default {
   name: "navbar",
@@ -39,6 +40,7 @@ export default {
     };
   },
 };
+*/
 </script>
 
 <style>
@@ -55,7 +57,8 @@ nav {
 }
 nav .menu-item {
   color: white;
-  padding: 10px 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   position: relative;
   text-align: center;
   border-bottom: 3px solid transparent;
@@ -66,12 +69,17 @@ nav .menu-item {
 nav .menu-item.active,
 nav .menu-item:hover {
   cursor: pointer;
-  background-color: #444;
+  background-color: rgb(82, 82, 82);
   border-bottom-color: red;
 }
 
 nav .menu-item a {
   color: inherit;
   text-decoration: none;
+}
+
+.bottonNimg {
+  height: 40px;
+  width: 130px;
 }
 </style>
