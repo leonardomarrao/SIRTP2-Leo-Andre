@@ -2,12 +2,12 @@
   <nav>
     <a href="/" class="btnhome"><img class="topN" src="../assets/logo.png" /></a>
     <div class="container">
-      <input
+     <!-- <input
         class="pesquisa"
         type="text"
         v-model="search"
         placeholder="pesquisa..."
-      />
+      /> -->
     </div>
   </nav>
 </template>

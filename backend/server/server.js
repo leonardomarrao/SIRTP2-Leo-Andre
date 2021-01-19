@@ -4,6 +4,9 @@ const db = require('../db/connect');
 
 const app = express();
 
+const cors = require("cors");
+app.use(cors());
+
 app.use(express.json());
 
 //APP PRODUTO
