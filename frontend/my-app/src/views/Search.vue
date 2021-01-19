@@ -6,11 +6,20 @@
     </header>
     <body>
       <a class="resetbtn" href="/pesquisa/">{{ $route.params.plataforma }}</a>
+
+      <CartaProduto
+        v-for="produto in lista"
+        v-bind:key="produto.id"
+        v-bind:name="produto.nome"
+        v-bind:preco="produto.preco"
+        v-bind:imagem="produto.imagem"
+      ></CartaProduto>
     </body>
   </div>
 </template>
 
 <script>
+import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
@@ -27,27 +36,26 @@ export default {
   components: {
     Navbar,
     TopNavbar,
+    CartaProduto,
   },
   data() {
     return {
-     // lista: [],
+      lista: [],
     };
   },
   mounted() {
-    
     this.getProducts();
   },
   methods: {
     getProducts() {
       var plataforma = this.$route.params.plataforma;
-      console.log(rogerio);
+
       axios({
         method: "get",
         url: `http://localhost:3000/produto/display/plataforma/` + plataforma,
       }).then((response) => {
         this.lista = response.data;
         console.log(this.lista);
-       
       });
     },
   },
