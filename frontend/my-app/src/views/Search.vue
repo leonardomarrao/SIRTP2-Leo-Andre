@@ -26,17 +26,16 @@ var lista = [];
         <li v-for="product of products" :key="product.id">{{product.name}}</li>
       </ul>
 */
+
+var lista = [];
+
 export default {
   name: "Search",
+  props: ['plataforma'],
   components: {
     Navbar,
     TopNavbar,
     CartaProduto,
-  },
-  data() {
-    return {
-      lista: [],
-    };
   },
   mounted() {
     this.getProducts();
@@ -50,11 +49,12 @@ export default {
         url: `http://localhost:3000/produto/display/plataforma/` + plataforma,
       }).then((response) => {
         this.lista = response.data;
-        console.log(this.lista);
-      });
-    },
-  },
+        console.log(response.data);
+      })
+    }
+  }
 };
+
 </script>
 
 <style>
