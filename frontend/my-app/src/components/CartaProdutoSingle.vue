@@ -1,11 +1,11 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="produto.nome">
     <img class="img" :src="dataUrl" />
     <br />
     <div class="container">
-      <a class="nome" href="/infoproduto">{{ produto.nome }}</a>
-      <p>{{ produto.preco  }} €</p>
-      
+        <p class="nome">{{ produto.nome }}</p>
+        <p class="nome">{{ produto.plataforma }}</p>
+        <p>{{ produto.preco  }} €</p>    
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
   },
   computed: {
     dataUrl() {
+      console.log(this.produto);
       return (
         "data:image/jpeg;base64," +
         btoa(
@@ -36,4 +37,9 @@ export default {
     },
   },
 };
+
 </script>
+
+<style>
+  
+</style>

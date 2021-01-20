@@ -1,35 +1,16 @@
 <template>
+  <router-link :to="{path: '/produto/' + this.produto.id}" tag="div">
   <div class="card">
     <img class="img" :src="dataUrl" />
     <br />
     <div class="container">
-      <a class="nome" href="/infoproduto">{{ produto.nome }}</a>
-      <p>{{ produto.preco  }} €</p>
-      
+        <p class="nome">{{ produto.nome }}</p>
+        <p>{{ produto.preco  }} €</p>    
     </div>
   </div>
+  </router-link>
 </template>
-<style >
-.img {
-  height: 300px;
-  width: 200px
-}
-.card{
-  margin: 20px;
-  width: 350px;
-  height: 350px;
-  border-radius: 20px;
-  background-color: rgb(241, 236, 236);
-  border:1px solid black;
- 
-}
-.nome {
 
-  text-decoration: none;
-  color: black;
-
-}
-</style>
 <script>
 export default {
   data: function() {
@@ -57,3 +38,25 @@ export default {
   },
 };
 </script>
+
+<style >
+.img {
+  height: 300px;
+  width: 200px
+}
+.card{
+  margin: 20px;
+  width: 350px;
+  height: 350px;
+  border-radius: 20px;
+  background-color: rgb(241, 236, 236);
+  border:1px solid black;
+ 
+}
+.nome {
+
+  text-decoration: none;
+  color: black;
+
+}
+</style>

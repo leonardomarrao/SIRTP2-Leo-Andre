@@ -19,15 +19,7 @@ import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
-var lista = [];
 
-/*
-<ul>
-        <li v-for="product of products" :key="product.id">{{product.name}}</li>
-      </ul>
-*/
-
-var lista = [];
 
 export default {
   name: "Search",
@@ -36,6 +28,11 @@ export default {
     Navbar,
     TopNavbar,
     CartaProduto,
+  },
+  data() {
+    return {
+      lista: []
+    }
   },
   mounted() {
     this.getProducts();
@@ -49,7 +46,7 @@ export default {
         url: `http://localhost:3000/produto/display/plataforma/` + plataforma,
       }).then((response) => {
         this.lista = response.data;
-        console.log(response.data);
+      
       })
     }
   }

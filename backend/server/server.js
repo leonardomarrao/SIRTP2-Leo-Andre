@@ -95,7 +95,7 @@ app.get('/produto/display/genero/:genero', async(req, res) => {
 
 });
 
-app.get('/produto/:id', async(req, res) => {
+app.get('/produto/id/:id', async(req, res) => {
 
     try {
         let results = await db.oneProduto(req.params.id);
