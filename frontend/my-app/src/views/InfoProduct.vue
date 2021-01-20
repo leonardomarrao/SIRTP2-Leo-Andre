@@ -5,7 +5,6 @@
       <Navbar class="bottom"></Navbar>
     </header>
     <body>
-      <a class="resetbtn" href="/pesquisa/">{{ $route.params.plataforma }}</a>
     </body>
   </div>
 </template>
