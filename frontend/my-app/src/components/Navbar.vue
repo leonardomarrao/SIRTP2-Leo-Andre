@@ -1,10 +1,11 @@
 <template>
   <nav>
-    <a class="btn" href="/pesquisa/playstation"  v-on:click="plataforma = 'playstation'"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></a>
+    <a class="btn" href="/pesquisa/playstation"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></a>
     <a class="btn" href="/pesquisa/xbox"><div class="menu-item"><img class="bottonNimg" src="../assets/xboxlogo.png"/></div></a>
     <a class="btn" href="/pesquisa/nintendo"><div class="menu-item"><img class="bottonNimg" src="../assets/nintendologo.png"/></div></a>
     <a class="btn" href="/pesquisa/pc"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></a>
     <a class="btn" href="/pesquisa/retro"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></a>
+
   </nav>
 </template>
 

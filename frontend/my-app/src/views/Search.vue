@@ -6,14 +6,10 @@
     </header>
     <body>
       <a class="resetbtn" href="/pesquisa/">{{ $route.params.plataforma }}</a>
-
-      <CartaProduto
-        v-for="produto in lista"
-        v-bind:key="produto.id"
-        v-bind:name="produto.nome"
-        v-bind:preco="produto.preco"
-        v-bind:imagem="produto.imagem"
+      <div class="cartoes" v-for="produto of lista" :key="produto.id">
+      <CartaProduto v-bind:produto="produto"
       ></CartaProduto>
+      </div>
     </body>
   </div>
 </template>
@@ -29,7 +25,6 @@ var lista = [];
 <ul>
         <li v-for="product of products" :key="product.id">{{product.name}}</li>
       </ul>
-
 */
 export default {
   name: "Search",
@@ -67,6 +62,12 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.cartoes {
+
+  float:left;
+
 }
 
 body {

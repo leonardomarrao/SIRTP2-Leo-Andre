@@ -8,7 +8,9 @@
         v-model="search"
         placeholder="pesquisa..."
       /> -->
+      <a href="/login" class="btnLogin"><img class="login" src="../assets/login.png" /></a>
     </div>
+     
   </nav>
 </template>
 
@@ -25,7 +27,7 @@ img {
   justify-content: left;
 }
 
-.pesquisa {
+/*.pesquisa {
   color: black;
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -33,12 +35,24 @@ img {
   justify-content: right;
   height: 30px;
   border-radius: 5px;
-}
+} */
 
 .btnhome {
   cursor: pointer;
   background: transparent;
   border: none !important;
+}
+
+.login {
+
+  cursor:pointer;
+  background:transparent;
+  border: none !important;
+  width: 60px;
+  height: 60px;
+  
+  
+
 }
 </style>
 
