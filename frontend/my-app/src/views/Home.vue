@@ -28,6 +28,7 @@ export default {
 
 body {
   font-family: "montserrat", sans-serif;
+  background-image: url("../assets/background.png");
 }
 
 .bottom {

@@ -5,7 +5,6 @@
       <Navbar class="bottom"></Navbar>
     </header>
     <body>
-      <a class="resetbtn" href="/pesquisa/">{{ $route.params.plataforma }}</a>
       <div class="cartoes" v-for="produto of lista" :key="produto.id">
       <CartaProduto v-bind:produto="produto"
       ></CartaProduto>

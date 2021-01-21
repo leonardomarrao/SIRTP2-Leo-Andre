@@ -38,4 +38,9 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+@font-face {
+  font-family: "Kenyan";
+  src: local("Kenyan"),   url(./fonts/kenyan.ttf) format("truetype");
+  }
 </style>

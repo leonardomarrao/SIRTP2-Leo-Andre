@@ -5,7 +5,7 @@
     <br />
     <div class="container">
         <p class="nome">{{ produto.nome }}</p>
-        <p>{{ produto.preco  }} €</p>    
+        <p class="nome">{{ produto.preco  }} €</p>    
     </div>
   </div>
   </router-link>
@@ -42,21 +42,33 @@ export default {
 <style >
 .img {
   height: 300px;
-  width: 200px
+  width: 200px;
 }
-.card{
-  margin: 20px;
-  width: 350px;
-  height: 350px;
-  border-radius: 20px;
-  background-color: rgb(241, 236, 236);
-  border:1px solid black;
- 
+.card {
+  margin: 30px;
+  width: 300px;
+  height: 355px;
+  border-radius: 10px;
+  background-color: rgb(68, 65, 65);
+  transition: box-shadow 0.3s;
+  transition: all 0.2s ease-in-out;
+}
+
+.produto {
+  color: white;
+  font-family: Kenyan;
+  font-size: 20px;
+}
+
+.card:hover {
+  box-shadow: 0 0 11px rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+
 }
 .nome {
-
   text-decoration: none;
-  color: black;
-
+  color: rgb(255, 255, 255);
+  font-family: Kenyan;
+  font-size: 20px;
 }
 </style>

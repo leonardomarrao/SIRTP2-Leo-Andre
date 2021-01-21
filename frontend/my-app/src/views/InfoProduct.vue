@@ -5,9 +5,10 @@
       <Navbar class="bottom"></Navbar>
     </header>
     <body>
-      
-      <CartaProdutoSingle v-bind:produto="produto"/>
-
+      <div class="centrar"> 
+        <CartaProdutoSingle v-bind:produto="produto"/>
+      </div>
+    
     </body>
   </div>
 </template>
@@ -47,3 +48,11 @@ export default {
   }
 }
 </script>
+
+<style>
+  .centrar {
+    margin: auto;
+    width: 80%;
+  }
+
+</style>
