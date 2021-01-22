@@ -49,7 +49,7 @@ export default {
   width: 300px;
   height: 355px;
   border-radius: 10px;
-  background-color: rgb(68, 65, 65);
+  background-color: rgba(68, 65, 65, 0.39);
   transition: box-shadow 0.3s;
   transition: all 0.2s ease-in-out;
 }
