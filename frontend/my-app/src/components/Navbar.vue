@@ -6,6 +6,13 @@
     <a class="btn" href="/pesquisa/pc"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></a>
     <a class="btn" href="/pesquisa/retro"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></a>
 
+    <!--
+    <router-link :to="{path: '/pesquisa/playstation'}" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></router-link>
+    <router-link :to="{path: '/pesquisa/xbox'}" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/xboxlogo.png"/></div></router-link>
+    <router-link :to="{path: '/pesquisa/nintendo'}" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/nintendologo.png"/></div></router-link>
+    <router-link :to="{path: '/pesquisa/pc'}" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></router-link>
+    <router-link :to="{path: '/pesquisa/retro'}" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></router-link>
+    -->
   </nav>
 </template>
 

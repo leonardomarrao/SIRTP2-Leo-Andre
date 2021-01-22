@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <a href="/" class="btnhome"><img class="topN" src="../assets/logo.png" /></a>
+    <router-link :to="{path: '/'}" tag="div" class="btnhome"><img class="topN" src="../assets/logo.png" /></router-link>
     <div class="container">
      <!-- <input
         class="pesquisa"
@@ -8,7 +8,7 @@
         v-model="search"
         placeholder="pesquisa..."
       /> -->
-      <a href="/login" class="btnLogin"><img class="login" src="../assets/login.png" /></a>
+      <router-link :to="{path: '/login'}" tag="div" class="btnLogin"><img class="login" src="../assets/login.png" /></router-link>
     </div>
      
   </nav>
