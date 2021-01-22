@@ -6,7 +6,7 @@
     </header>
     <body>
         <div class="logindiv">
-            <p class="textoLogin">Login:</p>
+            <p class="textoLogin">Login</p>
             <input class="inputlogin" v-model="username" placeholder="Nome de Usuário..."><br><br>
             <input class="inputlogin" v-model="password" type="password" placeholder="Palavra Chave..."><br><br>
             <input class="btnlogin" v-on:click="check()" type="submit" value="Entrar"><br>
@@ -45,7 +45,8 @@ export default {
     getCliente() {
       axios({
         method: "get",
-        url: `http://localhost:3000/cliente`,
+        url: `http://localhost:3000/cliente`, 
+        
       }).then((response) => {
         this.users = response.data;
       })
