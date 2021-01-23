@@ -61,8 +61,40 @@ const routes = [
     component: () => import(/* webpackChunkName: "registar" */ '../views/RegisterUser.vue')
   },
   {
-    path: '/pesquisa/:plataforma',
-    name: 'Pesquisa de Produto',
+    path: '/pesquisa/playstation',
+    name: 'playstation',
+    // route level code-splitting
+    // this generates a separate chunk (pesquisa.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "pesquisa" */ '../views/Search.vue')
+  }
+  ,{
+    path: '/pesquisa/xbox',
+    name: 'xbox',
+    // route level code-splitting
+    // this generates a separate chunk (pesquisa.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "pesquisa" */ '../views/Search.vue')
+  }
+  ,{
+    path: '/pesquisa/nintendo',
+    name: 'nintendo',
+    // route level code-splitting
+    // this generates a separate chunk (pesquisa.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "pesquisa" */ '../views/Search.vue')
+  }
+  ,{
+    path: '/pesquisa/pc',
+    name: 'pc',
+    // route level code-splitting
+    // this generates a separate chunk (pesquisa.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "pesquisa" */ '../views/Search.vue')
+  }
+  ,{
+    path: '/pesquisa/retro',
+    name: 'retro',
     // route level code-splitting
     // this generates a separate chunk (pesquisa.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

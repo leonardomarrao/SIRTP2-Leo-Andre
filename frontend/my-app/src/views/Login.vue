@@ -31,9 +31,7 @@ export default {
         users: [],
         username: '',
         password: '',
-        existe: false,
-        teste: "",
-        teste2: ""
+        existe: false
     }
   },
   mounted() {
@@ -50,18 +48,16 @@ export default {
       })
     },
     check: function () {
-      this.teste = this.$store.getters["getInfo"];
-      console.log("IN LOGGIN BEFORE: " + this.teste);
         for(var user of this.users) {
-            if(user.username == this.username && user.password == this.password) {
-                this.existe = true;
-                this.$store.mutations["setUser(user)"];
-                this.teste2 = this.$store.getters["getInfo"];
-                console.log("IN LOGGIN AFTER: " + this.teste2);
-            }
+          if(user.username == this.username && user.password == this.password) {
+            this.existe = true;
+            this.$store.commit("setUser", user);
+          }
         }
         if(!this.existe) {
-            console.log("Nao existe utilizador");
+          console.log("Nao existe utilizador");
+        }else {
+          console.log("IN LOGGIN USERNAME AND PASSWORD: " + this.$store.getters.getInfo.user.username + " " + this.$store.getters.getInfo.user.password);
         }
         
     }

@@ -2,7 +2,7 @@
   <div class="home">
     <header>
       <TopNavbar class="top"></TopNavbar>
-      <Navbar class = "bottom"></Navbar>
+      <Navbar class="bottom"></Navbar>
     </header>
   </div>
 </template>
@@ -11,10 +11,16 @@
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 export default {
+  
   name: "Home",
   components: {
     Navbar,
     TopNavbar,
+  },
+  data() {
+    return {
+      users: [],
+    };
   },
 };
 </script>

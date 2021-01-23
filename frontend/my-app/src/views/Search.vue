@@ -21,7 +21,7 @@ import axios from "axios";
 
 export default {
   name: "Search",
-  props: ['plataforma'],
+  
   components: {
     Navbar,
     TopNavbar,
@@ -30,21 +30,19 @@ export default {
   data() {
     return {
       lista: [],
-      teste: ""
+      plataforma: this.$store.getters.getPlataforma
     }
   },
   mounted() {
-    this.getProducts();
+    this.getProducts();//TENTAR CORRER ESTE METODO AO CLICAR NOS OUTROS ROUTERS, ESTA APENAS A CHAMAR A PRIMEIRA VEZ
   },
   methods: {
     getProducts() {
-      this.teste = store.getters.getInfo;
-      console.log("IN SEARCH:" + this.teste);
-      var plataforma = this.$route.params.plataforma;
+      console.log("OLAAAA CHECK");
 
       axios({
         method: "get",
-        url: `http://localhost:3000/produto/display/plataforma/` + plataforma,
+        url: `http://localhost:3000/produto/display/plataforma/` + this.plataforma,
       }).then((response) => {
         this.lista = response.data;
       
