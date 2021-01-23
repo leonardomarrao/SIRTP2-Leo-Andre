@@ -59,7 +59,7 @@ export default {
       password: "",
       email: "",
       nome: "",
-      
+
       user: {
         uname: "",
       },
@@ -88,30 +88,27 @@ export default {
 
       for (var user of this.users) {
         if (user.username == this.username) {
-          
           this.existe = true;
-          
-        }
-        else {
-          
+        } else {
           this.existe = false;
-          
         }
-        
-        } 
-        
-        if(this.existe == false) {
-          
-          axios({
-            method: "post",
-            url: `http://localhost:3000/cliente/insert`,
-            data: {username:this.username, password:this.password, nome:this.nome, email:this.email} /*Assim que se passa dados pelo body*/
-          }).then((response) => {
-            this.users = response.data;
-          });
-          this.logado = true;
-        }
-      
+      }
+
+      if (this.existe == false) {
+        axios({
+          method: "post",
+          url: `http://localhost:3000/cliente/insert`,
+          data: {
+            username: this.username,
+            password: this.password,
+            nome: this.nome,
+            email: this.email,
+          } /*Assim que se passa dados pelo body*/,
+        }).then((response) => {
+          this.users = response.data;
+        });
+        this.logado = true;
+      }
     },
   },
 };
