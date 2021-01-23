@@ -20,7 +20,6 @@
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
-console.log(logado);
 export default {
   name: "Login",
   components: {
@@ -32,11 +31,9 @@ export default {
         users: [],
         username: '',
         password: '',
-        user: {
-            uname: "",
-            upass: "",
-        },
-        existe: false
+        existe: false,
+        teste: "",
+        teste2: ""
     }
   },
   mounted() {
@@ -53,19 +50,18 @@ export default {
       })
     },
     check: function () {
-
+      this.teste = this.$store.getters["getInfo"];
+      console.log("IN LOGGIN BEFORE: " + this.teste);
         for(var user of this.users) {
             if(user.username == this.username && user.password == this.password) {
                 this.existe = true;
-                this.user.uname = user.username;
-                this.user.upass = user.password;
-
+                this.$store.mutations["setUser(user)"];
+                this.teste2 = this.$store.getters["getInfo"];
+                console.log("IN LOGGIN AFTER: " + this.teste2);
             }
         }
         if(!this.existe) {
             console.log("Nao existe utilizador");
-        } else {
-            console.log("username: " + this.user.uname + " password: " + this.user.upass);
         }
         
     }

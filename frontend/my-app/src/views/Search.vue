@@ -18,7 +18,6 @@ import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
-console.log(logado);
 
 export default {
   name: "Search",
@@ -30,7 +29,8 @@ export default {
   },
   data() {
     return {
-      lista: []
+      lista: [],
+      teste: ""
     }
   },
   mounted() {
@@ -38,6 +38,8 @@ export default {
   },
   methods: {
     getProducts() {
+      this.teste = store.getters.getInfo;
+      console.log("IN SEARCH:" + this.teste);
       var plataforma = this.$route.params.plataforma;
 
       axios({

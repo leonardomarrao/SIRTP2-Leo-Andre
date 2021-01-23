@@ -60,9 +60,8 @@ export default {
       email: "",
       nome: "",
 
-      user: {
-        uname: "",
-      },
+      logeduser: "",
+
       existe: false,
       logado: false,
     };
@@ -80,11 +79,6 @@ export default {
       });
     },
     check: function() {
-      console.log(this.users);
-      console.log(this.username);
-      console.log(this.password);
-      console.log(this.email);
-      console.log(this.nome);
 
       for (var user of this.users) {
         if (user.username == this.username) {
@@ -104,8 +98,8 @@ export default {
             nome: this.nome,
             email: this.email,
           } /*Assim que se passa dados pelo body*/,
-        }).then((response) => {
-          this.users = response.data;
+        }).then(() => {
+          this.logeduser = this.username;
         });
         this.logado = true;
       }
@@ -130,7 +124,7 @@ body {
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 15px;
@@ -140,14 +134,14 @@ body {
 
 .textoRegistar {
   text-align: center;
-  font-size: 60px;
+  font-size: 50px;
   color: white;
   font-family: "montserrat", sans-serif;
   padding: 20px;
 }
 
 .inputregistar {
-  font-size: 30px;
+  font-size: 20px;
   padding: 3px;
   border-radius: 5px;
   color: white;
