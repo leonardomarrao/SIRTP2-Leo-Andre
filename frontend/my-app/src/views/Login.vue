@@ -53,9 +53,6 @@ export default {
       })
     },
     check: function () {
-        console.log(this.users);
-        console.log(this.username);
-        console.log(this.password);
 
         for(var user of this.users) {
             if(user.username == this.username && user.password == this.password) {
