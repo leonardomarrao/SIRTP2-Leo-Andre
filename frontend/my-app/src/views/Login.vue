@@ -9,7 +9,7 @@
             <p class="textoLogin">Login</p>
             <input class="inputlogin" v-model="username" placeholder="Nome de Usuário..."><br><br>
             <input class="inputlogin" v-model="password" type="password" placeholder="Palavra Chave..."><br><br>
-            <input class="btnlogin" v-on:click="check()" type="submit" value="Entrar"><br>
+            <input class="btnlogin" v-on:click="check()" type="submit"  value="Entrar"><br>
             <router-link :to="{path: '/registar'}" tag="button" class="btnreglogin">Registar</router-link>
         </div>
     </body>
@@ -20,6 +20,7 @@
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
+console.log(logado);
 export default {
   name: "Login",
   components: {

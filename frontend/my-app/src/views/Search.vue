@@ -18,7 +18,7 @@ import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
-
+console.log(logado);
 
 export default {
   name: "Search",

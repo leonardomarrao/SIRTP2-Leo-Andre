@@ -58,12 +58,13 @@ export default {
       username: "",
       password: "",
       email: "",
-      telefone: "",
-
+      nome: "",
+      
       user: {
         uname: "",
       },
       existe: false,
+      logado: false,
     };
   },
   mounted() {
@@ -87,17 +88,30 @@ export default {
 
       for (var user of this.users) {
         if (user.username == this.username) {
-          console.log("Hmm Ricardo Solares");
-        } else {
+          
+          this.existe = true;
+          
+        }
+        else {
+          
+          this.existe = false;
+          
+        }
+        
+        } 
+        
+        if(this.existe == false) {
+          
           axios({
             method: "post",
             url: `http://localhost:3000/cliente/insert`,
-            data: {username:this.username, password:this.password, nome:this.nome, email:this.email} /*Assim que se passa dados pelo body, andre seu otario*/
+            data: {username:this.username, password:this.password, nome:this.nome, email:this.email} /*Assim que se passa dados pelo body*/
           }).then((response) => {
             this.users = response.data;
           });
+          this.logado = true;
         }
-      }
+      
     },
   },
 };
