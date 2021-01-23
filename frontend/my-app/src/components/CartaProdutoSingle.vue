@@ -3,25 +3,34 @@
     <div class="container-image">
       <img class="imagem" :src="dataUrl" />
     </div>
-    
+
     <div class="container-info">
-        <h2 class="titulo">{{ produto.nome }}</h2><br>
-        <div class="detailsupdesc">
-          <p class="details">Versão: {{ produto.consola }}</p>
-          <p class="details">Genero: {{ produto.genero }}</p>
-        </div><br>
-        
-        <p class="detailsdesc">Descrição<br><br>{{ produto.descricao }}</p><br>
+      <h1 class="titulo">{{ produto.nome }}</h1>
+      <br />
+      <div class="detailsupdesc">
+        <p class="details">Versão: {{ produto.consola }}</p>
+        <p class="details">Genero: {{ produto.genero }}</p>
+      </div>
+      <br />
 
-        <div class="detailsbellowdesc">
-          <p class="details">Classificação: {{ produto.classificacao }}/10</p>
-          <p class="details">Em stock: {{ produto.stock }} un.</p>
-          <p class="detailsprice">Preço: {{ produto.preco  }} €</p> 
-        </div><br>
+      <p class="detailsdesc">Descrição:<br /><br />{{ produto.descricao }}</p>
+      <br />
 
-        <div class="btndiv">
-          <button class="btnbuy">Comprar</button>
-        </div><br>
+      <div class="detailsbellowdesc">
+        <p class="details">Classificação: {{ produto.classificacao }}/10</p>
+        <p class="detailsprice">Preço: {{ produto.preco }} €</p>
+      </div>
+      <br />
+
+      <div class="btndiv">
+        <button class="btnFav">
+          <img class="favorito" src="../assets/favorito.png" />
+        </button>
+        <button class="btnbuy">
+          <img class="carrinho" src="../assets/carrinho.png" />
+        </button>
+      </div>
+      <br />
     </div>
   </div>
 </template>
@@ -40,7 +49,6 @@ export default {
   },
   computed: {
     dataUrl() {
-      
       return (
         "data:image/jpeg;base64," +
         btoa(
@@ -53,15 +61,14 @@ export default {
     },
   },
 };
-
 </script>
 
-<style >
+<style>
 .imagem {
   height: 300px;
   width: 200px;
   margin: 20px;
-  border-radius: 10px; 
+  border-radius: 10px;
 }
 
 .imagem:hover {
@@ -69,40 +76,40 @@ export default {
   transform: scale(1.3);
 }
 
-.carta{
+.carta {
   margin: 20px;
   width: auto;
-  height: 400px;
+  height: 550px;
   border-radius: 20px;
-  background-color: rgb(241, 236, 236);
-  border:1px solid black;
+  background-color: rgb(68, 65, 65);
+  border: 1px solid black;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .container-image {
   margin-left: 40px;
   margin-top: 30px;
-	width: 20%;
-	float: left;
+  width: 20%;
+  float: left;
 }
 
 .container-info {
   margin-top: 40px;
   margin-bottom: 40px;
   margin-right: 40px;
-	width: 66%;
-	float: right;
+  width: 66%;
+  float: right;
   text-align: left;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .details {
   text-decoration: none;
-  color: black;
+  color: white;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .detailsupdesc {
@@ -111,9 +118,9 @@ export default {
   display: flex;
   justify-content: space-between;
   text-decoration: none;
-  color: black;
+  color: white;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .detailsbellowdesc {
@@ -122,60 +129,98 @@ export default {
   display: flex;
   justify-content: space-between;
   text-decoration: none;
-  color: black;
+  color: white;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .detailsdesc {
   text-decoration: none;
-  color: black;
+  color: white;
   margin-left: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
   border-style: outset;
   padding: 5px;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .detailsprice {
   text-decoration: none;
-  color: black;
+  color: white;
   text-align: center;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .titulo {
   text-align: center;
   font-family: Kenyan;
-  
+  color: white;
 }
 
 .btndiv {
-  margin-left: 90%;
+
+  margin-left: 80%;
   display: flex;
   justify-content: space-between;
   text-decoration: none;
   color: black;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .btnbuy {
+  margin-right: 20px;
+  height: fit-content;
+  width: fit-content;
   cursor: pointer;
-  padding: 5px;
+  padding: 1px;
   border-radius: 10px;
-  background-color: lightgrey;
+  background-color: rgb(255, 255, 255);
   margin-left: 0;
   font-family: Kenyan;
-  font-size: 18px;
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  border: 2px solid black;
+}
+
+
+.carrinho {
+  height: 50px;
+  width: 55px;
+  transition: all 0.2s ease-in-out;
 }
 
 .btnbuy:hover {
-  background-color: darkgray;
-  
+  background-color: rgb(17, 122, 40);
+  transform: scale(1.2);
 }
+
+
+.btnFav {
+  margin-right: 10px;
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+  padding: 1px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-left: 0;
+  font-family: Kenyan;
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  border: 2px solid black;
+}
+
+.favorito {
+
+  height: 50px;
+  width: 55px;
+
+}
+
+
 
 </style>

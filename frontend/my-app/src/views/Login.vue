@@ -6,12 +6,11 @@
     </header>
     <body>
         <div class="logindiv">
-            
+            <p class="textoLogin">Login</p>
             <input class="inputlogin" v-model="username" placeholder="Nome de Usuário..."><br><br>
-            
             <input class="inputlogin" v-model="password" type="password" placeholder="Palavra Chave..."><br><br>
             <input class="btnlogin" v-on:click="check()" type="submit" value="Entrar"><br>
-            <router-link :to="{path: '/'}" tag="button" class="btnreglogin">Registar</router-link>
+            <router-link :to="{path: '/registar'}" tag="button" class="btnreglogin">Registar</router-link>
         </div>
     </body>
   </div>
@@ -40,13 +39,14 @@ export default {
     }
   },
   mounted() {
-    this.getProducts();
+    this.getCliente();
   },
   methods: {
-    getProducts() {
+    getCliente() {
       axios({
         method: "get",
-        url: `http://localhost:3000/cliente`,
+        url: `http://localhost:3000/cliente`, 
+        
       }).then((response) => {
         this.users = response.data;
       })
@@ -96,6 +96,15 @@ width: 100vw;
 
 }
 
+.textoLogin {
+
+  font-size: 70px;
+  color: white;
+  font-family: "montserrat", sans-serif;
+  padding: 20px;
+  text-align: center;
+}
+
 .logindiv {
     width: fit-content;
     height: fit-content;
@@ -114,6 +123,7 @@ width: 100vw;
 }
 
 .inputlogin {
+    font-size: 30px;
     padding: 3px;
     border-radius: 5px;
     color: white;
@@ -122,6 +132,7 @@ width: 100vw;
 }
 
 .btnlogin {
+    font-size: 40px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 3px;
@@ -137,6 +148,7 @@ width: 100vw;
 }
 
 .btnreglogin {
+    font-size: 25px;
     margin-top: 10px;
     color: white;
     background-color: transparent;
