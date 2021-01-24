@@ -4,6 +4,7 @@
       <TopNavbar class="top"></TopNavbar>
       <Navbar class="bottom"></Navbar>
     </header>
+    <router-link :to="{path: '/favoritos'}"  tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></router-link>
   </div>
 </template>
 
