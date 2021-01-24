@@ -26,7 +26,8 @@ export default {
   },
   data() {
     return {
-      favorito: []
+      favorito: [],
+      prodFav: []
     }
   },
   mounted() {
@@ -41,8 +42,49 @@ export default {
         url: `http://localhost:3000/favorito/cliente/` + 2,
       }).then((response) => {
         this.favorito = response.data;
-        console.log(this.favorito);
+        console.log(this.favorito + "favorito");
       })
+      for (var favoritos of this.favorito) {
+        axios({
+        method: "get",
+        url: `http://localhost:3000/produto/id/` + favoritos.idpro,
+      }).then((response) => {
+        this.prodFav = response.data;
+        console.log(this.prodFav + "prodFavkkkk");
+      })
+      }
     }
   }
 }
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cartoes {
+
+  float:left;
+
+}
+
+body {
+  font-family: "montserrat", sans-serif;
+}
+
+.bottom {
+  width: 100vw;
+  background-color: rgb(156, 156, 156);
+}
+
+.top {
+  background-color: rgb(82, 82, 82);
+  width: 100vw;
+}
+
+
+</style>
+
