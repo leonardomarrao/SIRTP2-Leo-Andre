@@ -381,6 +381,8 @@ app.get('/favorito/:id', async(req, res) => {
 
 });
 
+
+
 app.post('/favorito/insert', async(req, res) => {
     try {
         let results = await db.insertFavorito(req.body.idcli, req.body.idpro);
@@ -399,6 +401,20 @@ app.post('/favorito/remove', async(req, res) => {
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
+    }
+
+});
+
+//LOGIN
+
+app.post('/login/', async(req, res) => {
+
+    try {
+        let results = await db.login(req.body);
+        res.json(results);
+    } catch (error) {
+
+        res.status(401).send(error);
     }
 
 });

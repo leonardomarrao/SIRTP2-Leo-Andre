@@ -1,5 +1,6 @@
 //alterei essa linha de codigo
 const mysql = require('mysql');
+const jwt = require('jsonwebtoken');
 
 const pool = mysql.createPool({
     password: '',
@@ -384,7 +385,7 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
             if(err) {
                 return reject(err);
             }
-            return resolve(results[0]);
+            return resolve(results);
         });
     });
 };
@@ -413,6 +414,37 @@ sirtp2db.removeFavorito = (idcli, idpro) => {
         });
     });
 
+};
+
+//LOGIN
+sirtp2db.login = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
+                if(err){
+                    return reject(err);
+                }
+                if(results.length < 1) {                   
+                    return reject({ mensagem: 'Falha na autenticação'});                 
+                }
+                else {
+                    if(body.password == results[0].password) {
+                        const token = jwt.sign({
+                            id: results[0].id,
+                            username: results[0].username
+                        },
+                        'hahaxd',
+                        {
+                            expiresIn: "5h"
+                        });                     
+                        return resolve({                           
+                            mensagem: 'Autenticado com sucesso',
+                            token: token                       
+                        });
+                    } 
+                    return reject({ mensagem: 'Falha na autenticação'});
+                }    
+        });
+    });
 };
 
 module.exports = sirtp2db;
