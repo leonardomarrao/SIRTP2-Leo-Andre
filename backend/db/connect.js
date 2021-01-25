@@ -1,5 +1,6 @@
 //alterei essa linha de codigo
 const mysql = require('mysql');
+
 const jwt = require('jsonwebtoken');
 
 const pool = mysql.createPool({
@@ -381,11 +382,21 @@ sirtp2db.oneFavorito = (id) => {
 
 sirtp2db.allFavoritoFromCliente = (idcli) => {
     return new Promise((resolve,reject) => {
+        var favProducts = [];
         pool.query(`SELECT * FROM favorito WHERE idcli = ?`, [idcli],(err, results) => {
             if(err) {
                 return reject(err);
+            } else {
+                for(var produto of results) {
+                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
+                        if(err) {
+                            return reject(err);
+                        }
+                        favProducts.push(res);
+                    });
+                }
+                return resolve(favProducts);
             }
-            return resolve(results);
         });
     });
 };
@@ -400,7 +411,6 @@ sirtp2db.insertFavorito = (idcli, idpro) => {
             return resolve(results[0]);
         });
     });
-
 };
 
 sirtp2db.removeFavorito = (idcli, idpro) => {
@@ -413,10 +423,73 @@ sirtp2db.removeFavorito = (idcli, idpro) => {
             return resolve(results[0]);
         });
     });
+};
 
+sirtp2db.checkFavorito = (idcli, idpro) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM favorito WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results[0]);
+        });
+    });
+};
+
+sirtp2db.insertOrRemoveFavorito = (idcli, idpro, existe) => {
+    return new Promise((resolve,reject) => {
+        if([existe]) {
+            pool.query(`DELETE FROM favorito WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, resultsDel) => {
+                if(err) {
+                    return reject(err);
+                }
+                return resolve(resultsDel[0]);
+            });
+        } else {
+            pool.query(`INSERT INTO favorito (idcli, idpro) VALUES (?, ?)`, [idcli, idpro],(err, resultsIns) => {
+                if(err) {
+                    return reject(err);
+                }
+                return resolve(resultsIns[0]);
+            });
+        }
+    });
 };
 
 //LOGIN
+
+sirtp2db.login = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
+                if(err){
+                    return reject(err);
+                }
+                if(results.length < 1) {                   
+                    return reject({ mensagem: 'Falha na autenticação'});                 
+                }
+                else {
+                    if(body.password == results[0].password) {
+                        const token = jwt.sign({
+                            id: results[0].id,
+                            username: results[0].username
+                        },
+                        'hahaxd',
+                        {
+                            expiresIn: "5h"
+                        });                     
+                        return resolve({                           
+                            mensagem: 'Autenticado com sucesso',
+                            token: token                       
+                        });
+                    } 
+                    return reject({ mensagem: 'Falha na autenticação'});
+                }    
+        });
+    });
+};
+
+//LOGIN
+
 sirtp2db.login = (body) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {

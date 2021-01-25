@@ -35,9 +35,11 @@ export default {
     }
   },
   mounted() {
+    //OUT
     this.getCliente();
   },
   methods: {
+    //OUT
     getCliente() {
       axios({
         method: "get",
@@ -59,8 +61,21 @@ export default {
         }else {
           console.log("IN LOGGIN USERNAME AND PASSWORD: " + this.$store.getters.getInfo.user.username + " " + this.$store.getters.getInfo.user.password);
         }
-        
+/*
+        axios({
+        method: "get",
+        url: `http://localhost:3000/login`, 
+        data: {
+            username: this.username,
+            password: this.password
+          }
+      }).then((response) => {
+        this.users = response.data;
+        this.existe = true;
+      })   
+      */
     }
+    
   }
 };
 </script>

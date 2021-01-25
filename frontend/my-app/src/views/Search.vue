@@ -28,6 +28,7 @@ export default {
     CartaProduto,
   },
   data() {
+    console.log("Check chamda");
     return {
       lista: [],
       plataforma: this.$store.getters.getPlataforma

@@ -10,6 +10,7 @@
       <div class="detailsupdesc">
         <p class="details">Versão: {{ produto.consola }}</p>
         <p class="details">Genero: {{ produto.genero }}</p>
+        <p class="details">Classificação: {{ produto.classificacao }}/10</p>
       </div>
       <br />
 
@@ -17,10 +18,8 @@
       <br />
 
       <div class="detailsbellowdesc">
-        <p class="details">Classificação: {{ produto.classificacao }}/10</p>
         <p class="detailsprice">Preço: {{ produto.preco }} €</p>
       </div>
-      <br />
 
       <div class="btndiv">
         <button class="btnFav">
@@ -30,7 +29,6 @@
           <img class="carrinho" src="../assets/carrinho.png" />
         </button>
       </div>
-      <br />
     </div>
   </div>
 </template>
@@ -89,7 +87,7 @@ export default {
 
 .container-image {
   margin-left: 40px;
-  margin-top: 30px;
+  margin-top: 70px;
   width: 20%;
   float: left;
 }
@@ -113,8 +111,8 @@ export default {
 }
 
 .detailsupdesc {
-  margin-left: 100px;
-  margin-right: 150px;
+  margin-left: 80px;
+  margin-right: 110px;
   display: flex;
   justify-content: space-between;
   text-decoration: none;
@@ -124,10 +122,7 @@ export default {
 }
 
 .detailsbellowdesc {
-  margin-left: 70px;
-  margin-right: 120px;
-  display: flex;
-  justify-content: space-between;
+  
   text-decoration: none;
   color: white;
   font-family: Kenyan;
@@ -212,6 +207,11 @@ export default {
   font-size: 22px;
   color: rgb(255, 255, 255);
   border: 2px solid black;
+}
+
+.btnFav:hover {
+  background-color: rgb(204, 12, 12);
+  transform: scale(1.2);
 }
 
 .favorito {

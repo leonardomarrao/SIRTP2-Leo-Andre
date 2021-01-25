@@ -357,18 +357,6 @@ app.get('/favorito/', async(req, res) => {
 
 });
 
-app.get('/favorito/cliente/:idcli', async(req, res) => {
-
-    try {
-        let results = await db.allFavoritoFromCliente(req.params.idcli);
-        res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-
-});
-
 app.get('/favorito/:id', async(req, res) => {
 
     try {
@@ -381,7 +369,18 @@ app.get('/favorito/:id', async(req, res) => {
 
 });
 
+app.get('/favorito/cliente/:idcli', async(req, res) => {
+    console.log(req.params.idcli);
+    try {
+        let results = await db.allFavoritoFromCliente(req.params.idcli);
+        console.log(results);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 
+});
 
 app.post('/favorito/insert', async(req, res) => {
     try {
@@ -397,6 +396,29 @@ app.post('/favorito/insert', async(req, res) => {
 app.post('/favorito/remove', async(req, res) => {
     try {
         let results = await db.removeFavorito(req.body.idcli, req.body.idpro);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.get('/checkFavorito', async(req, res) => {
+
+    try {
+        let results = await db.checkFavorito(req.body.idcli, req.body.idpro);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.post('/favorito/insertOrRemove', async(req, res) => {
+    try {
+        let results = await db.insertOrRemoveFavorito(req.body.idcli, req.body.idpro, req.body.existe);
         res.json(results);
     } catch (error) {
         console.log(error);
