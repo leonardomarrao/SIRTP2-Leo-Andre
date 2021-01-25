@@ -35,13 +35,16 @@ export default {
   methods: {
     getFavorits() {
       var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      var idcli = 1;
+      var idcli = 2;
       axios({
         method: "get",
         url: `http://localhost:3000/favorito/cliente/` + idcli,
       }).then((response) => {
         this.favorito = response.data;
-        console.log(this.favorito + "favorito");
+        for(var f of this.favorito){
+        console.log(f.value);
+        }
+        
       })
     }
   }
