@@ -47,6 +47,30 @@ app.get('/produto/display/plataforma/:plataforma', async(req, res) => {
 
 });
 
+app.get('/produto/display/plataforma&genero', async(req, res) => {
+
+    try {
+        let results = await db.displayProdutoPlataformaAndGenero(req.body.plataforma, req.body.genero);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.get('/produto/display/plataforma&categoria', async(req, res) => {
+
+    try {
+        let results = await db.displayProdutoPlataformaAndCategoria(req.body.plataforma, req.body.categoria);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 app.get('/produto/display/consola/:consola', async(req, res) => {
 
     try {
@@ -176,7 +200,6 @@ app.post('/produto/insert', async(req, res) => {
 app.get('/generos', async(req, res) => {
     try {
         let results = await db.displayGeneros();
-        console.log(results);
         res.json(results);
     } catch (error) {
         console.log(error);

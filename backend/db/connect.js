@@ -49,6 +49,28 @@ sirtp2db.displayProdutoPlataforma = (plataforma) => {
     });
 };
 
+sirtp2db.displayProdutoPlataformaAndGenero = (plataforma, genero) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM produto WHERE plataforma = ? AND genero = ? AND stock <> 0 AND ativo <> 0`, [plataforma, genero],(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+sirtp2db.displayProdutoPlataformaAndCategoria = (plataforma, categoria) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM produto WHERE plataforma = ? AND categoria = ? AND stock <> 0 AND ativo <> 0`, [plataforma, categoria],(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 sirtp2db.displayProdutoConsola = (consola) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM produto WHERE consola = ? AND stock <> 0 AND ativo <> 0`, [consola],(err, results) => {
@@ -431,8 +453,6 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
     }
 
 };
-
-
 
 sirtp2db.insertFavorito = (idcli, idpro) => {
 

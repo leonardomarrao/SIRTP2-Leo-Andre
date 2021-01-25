@@ -12,7 +12,7 @@
       <div class="caixaFiltro">
     <select v-model="generoEscolhido">
       <option disabled value="">Genero</option>
-      <option v-for="produto of listaGeneros" :key="produto.id" v-on:click="teste()">{{ produto.genero }}</option>
+      <option v-for="produto of listaGeneros" :key="produto.id" v-on:click="getProductsFromGenderAndPlataform()">{{ produto }}</option>
     </select>
   </div>
     </body>
@@ -35,11 +35,11 @@ export default {
     CartaProduto,
   },
   data() {
-    console.log("Check chamda");
     return {
       
       lista: [],
       listaGeneros: [],
+      listaGenerosPlataforma: [],
       plataforma: this.$store.getters.getPlataforma,
       generoEscolhido: "",
       
@@ -51,8 +51,6 @@ export default {
   },
   methods: {
     getProducts() {
-      console.log("OLAAAA CHECK");
-
       axios({
         method: "get",
         url:
@@ -63,19 +61,37 @@ export default {
       });
     },
     getGender() {
-  axios({
+      axios({
         method: "get",
         url:
           `http://localhost:3000/generos`,
-      }).then((response) => {
-        this.listaGeneros = response.data;
-        console.log(this.listaGeneros);
-      });
-  },
-  teste() {
-    console.log(this.generoEscolhido);
+        }).then((response) => {
+          for(var p of response.data) {
+            if(p.genero != "N/A") {
+              this.listaGeneros.push(p.genero);
+            }
+          }
 
-  }
+        });
+    },
+    getProductsFromGenderAndPlataform() {
+      axios({
+        method: "get",
+        url:
+          `http://localhost:3000/produto/display/plataforma&genero`,
+        data: {
+          plataforma: "xbox",
+          genero: "Ação"
+        }
+        }).then((response) => {
+          
+          console.log(response.data); 
+        });
+    },
+    teste() {
+      console.log(this.generoEscolhido);
+
+    }
   },
   
 };

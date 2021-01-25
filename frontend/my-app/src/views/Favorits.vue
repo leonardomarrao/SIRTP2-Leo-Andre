@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       favorito: [],
+      listaFavoritos: [],
     }
   },
   mounted() {
@@ -35,16 +36,21 @@ export default {
   methods: {
     getFavorits() {
       var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      var idcli = 2;
+      var idcli = 1;
       axios({
         method: "get",
         url: `http://localhost:3000/favorito/cliente/` + idcli,
       }).then((response) => {
-        this.favorito = response.data;
-        for(var f of this.favorito){
-        console.log(f.value);
+        this.listaFavoritos = response.data;
+        var indice = this.listaFavoritos.length; 
+
+        while(indice != 0) {
+          this.favorito.push(this.listaFavoritos[indice-1][0]);
+          indice = indice -1;
+          
         }
-        
+
+        console.log(this.favorito);
       })
     }
   }
