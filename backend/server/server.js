@@ -173,6 +173,18 @@ app.post('/produto/insert', async(req, res) => {
 
 });
 
+app.get('/generos', async(req, res) => {
+    try {
+        let results = await db.displayGeneros();
+        console.log(results);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 //APP CLIENTE
 
 app.get('/cliente/', async(req, res) => {
@@ -370,9 +382,20 @@ app.get('/favorito/:id', async(req, res) => {
 });
 
 app.get('/favorito/cliente/:idcli', async(req, res) => {
-    console.log(req.params.idcli);
     try {
         let results = await db.allFavoritoFromCliente(req.params.idcli);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.get('/teste/cliente/:idcli', async(req, res) => {
+    console.log(req.params.idcli);
+    try {
+        let results = await db.teste(req.params.idcli);
         console.log(results);
         res.json(results);
     } catch (error) {

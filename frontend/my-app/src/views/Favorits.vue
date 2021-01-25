@@ -46,12 +46,12 @@ export default {
       })
       for (var favoritos of this.favorito) {
         axios({
-        method: "get",
-        url: `http://localhost:3000/produto/id/` + favoritos.idpro,
-      }).then((response) => {
-        this.prodFav = response.data;
-        console.log(this.prodFav + "prodFavkkkk");
-      })
+          method: "get",
+          url: `http://localhost:3000/produto/id/` + favoritos.idpro,
+        }).then((response) => {
+          this.prodFav = response.data;
+          console.log(this.prodFav + "prodFavkkkk");
+        })
       }
     }
   }

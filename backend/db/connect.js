@@ -182,6 +182,17 @@ sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, 
 
 };
 
+sirtp2db.displayGeneros = () => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT DISTINCT genero FROM produto`,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 //QUERIES CLIENTE
 
 sirtp2db.allCliente = () => {
@@ -382,6 +393,59 @@ sirtp2db.oneFavorito = (id) => {
 
 sirtp2db.allFavoritoFromCliente = (idcli) => {
     return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM favorito WHERE idcli = ?`, [idcli],(err, results) => {
+            if(err) {
+                 reject(err);
+            }
+            else {       
+                teste(results).then((res) => {
+                    resolve(res);
+                })   
+            }
+        });
+    });
+
+    async function teste(res) {
+        return await new Promise((resolve,reject) => {
+            var array = [];
+            for(var produto of res) {  
+                var promise = new Promise((resolve,reject) => {
+                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
+                        if(err) {
+                             reject(err);
+                        }else {
+                            resolve(res);
+                        }  
+                    });
+                });
+                array.push(promise);
+            }
+            var final = [];
+            Promise.all(array).then((produto) => {
+                produto.forEach((rogerio) => {
+                    final.push(rogerio);
+                });
+                resolve(final);
+            });
+        });
+    }
+
+};
+
+/*
+
+for(var produto of results) {
+                    controlo = controlo - 1;
+                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
+                        if(err) {
+                             reject(err);
+                        }else {
+                            favProducts.push(res);
+                        }  
+                    });
+                }
+
+return new Promise((resolve,reject) => {
         var favProducts = [];
         pool.query(`SELECT * FROM favorito WHERE idcli = ?`, [idcli],(err, results) => {
             if(err) {
@@ -398,6 +462,13 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
                 return resolve(favProducts);
             }
         });
+    });
+*/
+
+sirtp2db.teste = (id) => {
+    return new Promise((resolve,reject) => {
+        return resolve(id);
+        
     });
 };
 
