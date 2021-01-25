@@ -23,7 +23,7 @@
 import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
-import FiltroProdutos from "../components/FiltroProdutos.vue";
+
 import axios from "axios";
 
 export default {
@@ -33,7 +33,6 @@ export default {
     Navbar,
     TopNavbar,
     CartaProduto,
-    FiltroProdutos,
   },
   data() {
     console.log("Check chamda");
@@ -60,7 +59,7 @@ export default {
           `http://localhost:3000/produto/display/plataforma/` + this.plataforma,
       }).then((response) => {
         this.lista = response.data;
-        console.log(this.lista.genero);
+       
       });
     },
     getGender() {

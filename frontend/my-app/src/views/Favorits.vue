@@ -4,7 +4,7 @@
       <TopNavbar class="top"></TopNavbar>
     </header>
     <body>
-      <div class="centrar"> 
+      <div class="centrar" v-for="produto of favorito" :key="produto.id"> 
         <FavoritoBarra v-bind:produto="produto"
       ></FavoritoBarra>
       </div>
@@ -19,7 +19,7 @@ import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
 
 export default {
-  name: "Favoritos",
+  name: "Favorits",
   components: {
     TopNavbar,
     FavoritoBarra,
@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       favorito: [],
-      prodFav: []
     }
   },
   mounted() {
@@ -36,23 +35,14 @@ export default {
   methods: {
     getFavorits() {
       var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      
+      var idcli = 1;
       axios({
         method: "get",
-        url: `http://localhost:3000/favorito/cliente/` + 2,
+        url: `http://localhost:3000/favorito/cliente/` + idcli,
       }).then((response) => {
         this.favorito = response.data;
         console.log(this.favorito + "favorito");
       })
-      for (var favoritos of this.favorito) {
-        axios({
-          method: "get",
-          url: `http://localhost:3000/produto/id/` + favoritos.idpro,
-        }).then((response) => {
-          this.prodFav = response.data;
-          console.log(this.prodFav + "prodFavkkkk");
-        })
-      }
     }
   }
 }

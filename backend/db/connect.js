@@ -60,6 +60,17 @@ sirtp2db.displayProdutoConsola = (consola) => {
     });
 };
 
+sirtp2db.displayGeneros = () => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT DISTINCT genero FROM produto`,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 sirtp2db.displayProdutoCategoria = (categoria) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM produto WHERE categoria = ? AND stock <> 0 AND ativo <> 0`, [categoria],(err, results) => {
@@ -180,17 +191,6 @@ sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, 
         });
     });
 
-};
-
-sirtp2db.displayGeneros = () => {
-    return new Promise((resolve,reject) => {
-        pool.query(`SELECT DISTINCT genero FROM produto`,(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results);
-        });
-    });
 };
 
 //QUERIES CLIENTE
@@ -432,45 +432,7 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
 
 };
 
-/*
 
-for(var produto of results) {
-                    controlo = controlo - 1;
-                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
-                        if(err) {
-                             reject(err);
-                        }else {
-                            favProducts.push(res);
-                        }  
-                    });
-                }
-
-return new Promise((resolve,reject) => {
-        var favProducts = [];
-        pool.query(`SELECT * FROM favorito WHERE idcli = ?`, [idcli],(err, results) => {
-            if(err) {
-                return reject(err);
-            } else {
-                for(var produto of results) {
-                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
-                        if(err) {
-                            return reject(err);
-                        }
-                        favProducts.push(res);
-                    });
-                }
-                return resolve(favProducts);
-            }
-        });
-    });
-*/
-
-sirtp2db.teste = (id) => {
-    return new Promise((resolve,reject) => {
-        return resolve(id);
-        
-    });
-};
 
 sirtp2db.insertFavorito = (idcli, idpro) => {
 

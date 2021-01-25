@@ -3,10 +3,10 @@
     <img class="img" :src="dataUrl" />
     <br />
     <div class="container">
-      <router-link :to="{ path: '/produto/' + this.favorito.id }" tag="div">
-        <p class="nome">{{ favorito.nome }}</p>
+      <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
+        <p class="nome">{{ produto.nome }}</p>
       </router-link>
-      <p class="nome">{{ favorito.preco }} €</p>
+      <p class="nome">{{ produto.preco }} €</p>
     </div>
   </div>
 </template>
@@ -15,6 +15,7 @@
 export default {
   name: "FavoritoBarra",
   data: function() {
+    console.log(produto);
     return {
       url: "",
     };
