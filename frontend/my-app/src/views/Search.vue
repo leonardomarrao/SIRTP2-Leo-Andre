@@ -6,9 +6,15 @@
     </header>
     <body>
       <div class="cartoes" v-for="produto of lista" :key="produto.id">
-      <CartaProduto v-bind:produto="produto"
-      ></CartaProduto>
+        <CartaProduto v-bind:produto="produto"></CartaProduto>
       </div>
+      
+      <div class="caixaFiltro">
+    <select v-model="generoEscolhido">
+      <option disabled value="">Genero</option>
+      <option v-for="produto of listaGeneros" :key="produto.id" v-on:click="teste()">{{ produto.genero }}</option>
+    </select>
+  </div>
     </body>
   </div>
 </template>
@@ -17,25 +23,32 @@
 import CartaProduto from "../components/CartaProduto.vue";
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
+import FiltroProdutos from "../components/FiltroProdutos.vue";
 import axios from "axios";
 
 export default {
   name: "Search",
-  
+
   components: {
     Navbar,
     TopNavbar,
     CartaProduto,
+    FiltroProdutos,
   },
   data() {
     console.log("Check chamda");
     return {
+      
       lista: [],
-      plataforma: this.$store.getters.getPlataforma
-    }
+      listaGeneros: [],
+      plataforma: this.$store.getters.getPlataforma,
+      generoEscolhido: "",
+      
+    };
   },
   mounted() {
-    this.getProducts();//TENTAR CORRER ESTE METODO AO CLICAR NOS OUTROS ROUTERS, ESTA APENAS A CHAMAR A PRIMEIRA VEZ
+    this.getProducts(); //TENTAR CORRER ESTE METODO AO CLICAR NOS OUTROS ROUTERS, ESTA APENAS A CHAMAR A PRIMEIRA VEZ
+    this.getGender();
   },
   methods: {
     getProducts() {
@@ -43,15 +56,30 @@ export default {
 
       axios({
         method: "get",
-        url: `http://localhost:3000/produto/display/plataforma/` + this.plataforma,
+        url:
+          `http://localhost:3000/produto/display/plataforma/` + this.plataforma,
       }).then((response) => {
         this.lista = response.data;
-      
-      })
-    }
-  }
-};
+        console.log(this.lista.genero);
+      });
+    },
+    getGender() {
+  axios({
+        method: "get",
+        url:
+          `http://localhost:3000/generos`,
+      }).then((response) => {
+        this.listaGeneros = response.data;
+        console.log(this.listaGeneros);
+      });
+  },
+  teste() {
+    console.log(this.generoEscolhido);
 
+  }
+  },
+  
+};
 </script>
 
 <style>
@@ -62,9 +90,7 @@ export default {
 }
 
 .cartoes {
-
-  float:left;
-
+  float: left;
 }
 
 body {

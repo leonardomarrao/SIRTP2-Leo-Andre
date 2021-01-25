@@ -5,7 +5,7 @@
     <br />
     <div class="container">
         <p class="nome">{{ produto.nome }}</p>
-        <p class="nome">{{ produto.preco  }} €</p>    
+        <p class="nome">{{ produto.preco }} €</p>    
     </div>
   </div>
   </router-link>
