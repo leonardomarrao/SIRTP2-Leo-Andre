@@ -367,7 +367,7 @@ sirtp2db.allDetailsFromCompra = (idcli) => {
 
     async function getProds(res) {
         return await new Promise((resolve,reject) => {
-            var array = [];
+            var arrayAll = [];
             for(var produto of res) {  
                 var promise = new Promise((resolve,reject) => {
                     pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
@@ -378,13 +378,17 @@ sirtp2db.allDetailsFromCompra = (idcli) => {
                         }  
                     });
                 });
-                array.push(promise);
+                arrayAll.push(promise);
             }
+            
             var final = [];
-            Promise.all(array).then((produto) => {
-                produto.forEach((rogerio) => {
-                    final.push(rogerio);
+            Promise.all(arrayAll).then((array) => {
+                array.forEach((singleArray) => {
+                    singleArray.forEach((produto) => {              
+                        final.push(produto);
+                    });
                 });
+                
                 resolve(final);
             });
         });
@@ -514,16 +518,16 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
                  reject(err);
             }
             else {       
-                teste(results).then((res) => {
+                getProdutos(results).then((res) => {
                     resolve(res);
                 })   
             }
         });
     });
 
-    async function teste(res) {
+    async function getProdutos(res) {
         return await new Promise((resolve,reject) => {
-            var array = [];
+            var arrayAll = [];
             for(var produto of res) {  
                 var promise = new Promise((resolve,reject) => {
                     pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
@@ -534,13 +538,16 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
                         }  
                     });
                 });
-                array.push(promise);
+                arrayAll.push(promise);
             }
             var final = [];
-            Promise.all(array).then((produto) => {
-                produto.forEach((rogerio) => {
-                    final.push(rogerio);
+            Promise.all(arrayAll).then((array) => {
+                array.forEach((singleArray) => {
+                    singleArray.forEach((produto) => {              
+                        final.push(produto);
+                    });
                 });
+                
                 resolve(final);
             });
         });

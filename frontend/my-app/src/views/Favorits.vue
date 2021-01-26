@@ -2,6 +2,7 @@
   <div class="home">
     <header>
       <TopNavbar class="top"></TopNavbar>
+      <NavbarUtilizador ></NavbarUtilizador>
     </header>
     <body>
       <br />
@@ -16,6 +17,7 @@
 <script>
 import FavoritoBarra from "../components/FavoritoBarra.vue";
 import TopNavbar from "../components/TopNavbar.vue";
+import NavbarUtilizador from "../components/NavbarUtilizador.vue";
 import axios from "axios";
 
 export default {
@@ -23,11 +25,11 @@ export default {
   components: {
     TopNavbar,
     FavoritoBarra,
+    NavbarUtilizador,
   },
   data() {
     return {
       favorito: [],
-      listaFavoritos: [],
     };
   },
   mounted() {
@@ -36,19 +38,12 @@ export default {
   methods: {
     getFavorits() {
       var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      var idcli = 1;
+      var idcli = 2;
       axios({
         method: "get",
         url: `http://localhost:3000/favorito/cliente/` + idcli,
       }).then((response) => {
-        this.listaFavoritos = response.data;
-        var indice = this.listaFavoritos.length;
-
-        while (indice != 0) {
-          this.favorito.push(this.listaFavoritos[indice - 1][0]);
-          indice = indice - 1;
-        }
-
+        this.favorito = response.data;
         console.log(this.favorito);
       });
     },
