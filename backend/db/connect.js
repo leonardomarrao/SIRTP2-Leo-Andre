@@ -137,6 +137,111 @@ sirtp2db.oneProduto = (id) => {
     });
 };
 
+sirtp2db.updateDadosProduto = (body) => {
+    return new Promise((resolve,reject) => {
+        var nomeAtual = "";
+        var categoriaAtual = "";
+        var precoAtual = "";
+        var stockAtual = "";
+        var descricaoAtual = "";
+        var plataformaAtual = "";
+        var consolaAtual = "";
+        var classificacaoAtual = "";
+        var generoAtual = "";
+        var ativoAtual = "";
+        var imagemAtual = "";
+        var idAtual = "";
+
+        pool.query(`SELECT * FROM produto WHERE id = ?`, [body.id],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            else {
+                if(body.nome != null && body.nome != '' 
+                    && body.categoria != null && body.categoria != '' 
+                    && body.preco != null && body.preco != '' 
+                    && body.stock != null && body.stock != '' 
+                    && body.descricao != null && body.descricao != '' 
+                    && body.plataforma != null && body.plataforma != '' 
+                    && body.consola != null && body.consola != '' 
+                    && body.classificacao != null && body.classificacao != '' 
+                    && body.genero != null && body.genero != '' 
+                    && body.ativo != null && body.ativo != '' 
+                    && body.imagem != null && body.imagem != '') {
+                    reject("Nao foram passados parametros para atualizar");
+                }
+                nomeAtual = results[0].nome;
+                categoriaAtual = results[0].categoria;
+                precoAtual = results[0].preco;
+                stockAtual = results[0].stock;
+                descricaoAtual = results[0].descricao;
+                plataformaAtual = results[0].plataforma;
+                consolaAtual = results[0].consola;
+                classificacaoAtual = results[0].classificacao;
+                generoAtual = results[0].genero;
+                ativoAtual = results[0].ativo;
+                imagemAtual = results[0].imagem;
+                idAtual = body.id;
+
+                if(body.nome != null && body.nome != '') {
+                    nomeAtual = body.nome;
+                }
+                if(body.categoria != null && body.categoria != '') {
+                    categoriaAtual = body.categoria;
+                }
+                if(body.preco != null && body.preco != '') {
+                    precoAtual = body.preco;
+                }
+                if(body.stock != null && body.stock != '') {
+                    stockAtual = body.stock;
+                }
+                if(body.descricao != null && body.descricao != '') {
+                    descricaoAtual = body.descricao;
+                }
+                if(body.plataforma != null && body.plataforma != '') {
+                    plataformaAtual = body.plataforma;
+                }
+                if(body.consola != null && body.consola != '') {
+                    consolaAtual = body.consola;
+                }
+                if(body.classificacao != null && body.classificacao != '') {
+                    classificacaoAtual = body.classificacao;
+                }
+                if(body.genero != null && body.genero != '') {
+                    generoAtual = body.genero;
+                }
+                if(body.ativo != null && body.ativo != '') {
+                    ativoAtual = body.ativo;
+                }
+                if(body.imagem != null && body.imagem != '') {
+                    imagemAtual = body.imagem;
+                }
+
+                updateDados(nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual, 
+                    consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual).then((res) => {
+                    resolve("Dados Atualizados Com Sucesso");
+                }); 
+            }
+        });
+    });
+
+    async function updateDados(nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual, 
+        consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`UPDATE produto SET nome = ?, categoria = ?, preco = ?, stock = ?, descricao = ?, plataforma = ?,
+                         consola = ?, classificacao = ?, genero = ?, ativo = ?, imagem = ? WHERE id = ?`,
+                         [nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual,
+                         consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results);
+            });
+        });
+    }
+
+};
+
 sirtp2db.updatePrecoProduto = (preco, id) => {
 
     return new Promise((resolve,reject) => {
@@ -285,6 +390,9 @@ sirtp2db.updateDadosCliente = (password, nome, email, id) => {
                 reject(err);
             }
             else {
+                if(nome != null && nome != '' && email != null && email != '' && password != null && password != '') {
+                    reject("Nao foram passados parametros para atualizar");
+                }
                 nomeAtual = results[0].nome;
                 emailAtual = results[0].email;
                 passwordAtual = results[0].password;

@@ -131,6 +131,17 @@ app.get('/produto/id/:id', async(req, res) => {
 
 });
 
+app.put('/produto/:id/updateDadosProduto', async(req, res) => {
+    try {
+        let results = await db.updateDadosProduto(req.body);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 app.put('/produto/:id/updatepreco', async(req, res) => {
     try {
         let results = await db.updatePrecoProduto(req.body.preco, req.params.id);
