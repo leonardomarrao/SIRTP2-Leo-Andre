@@ -1,25 +1,20 @@
 <template>
   <div class="linhaCompra">
-     <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-    <img class="imgCompra" :src="dataUrl" />
+    <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
+      <img class="imgCompra" :src="dataUrl" />
     </router-link>
     <div class="containerCompra">
       <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
         <p class="infoCompra" id="nomeCompra">{{ produto.nome }}</p>
       </router-link>
-      <p class="infoCompra">{{ produto.preco }} €</p>
-      <p class="infoCompra">{{ produto.genero }} </p>
-      <p class="infoCompra">{{ produto.classificacao }}/10 </p>
     </div>
   </div>
-  
 </template>
 
 <script>
 export default {
   name: "CompraBarra",
   data: function() {
-    console.log(produto);
     return {
       url: "",
     };
@@ -46,8 +41,7 @@ export default {
 </script>
 
 <style>
-
-.linhaCompra{
+.linhaCompra {
   background-color: rgba(133, 125, 125, 0.473);
   height: 160px;
   width: auto;
@@ -58,16 +52,16 @@ export default {
   border-radius: 17px;
 }
 
-.imgCompra{
-  float:left;
+.imgCompra {
+  float: left;
   height: 145px;
   border-radius: 15px;
   padding-top: 20px;
   cursor: pointer;
 }
 
-.infoCompra{
-  float:left;
+.infoCompra {
+  float: left;
   padding-top: 50px;
   font-size: 50px;
   font-family: Kenyan;
@@ -76,7 +70,7 @@ export default {
 
 .containerCompra {
   justify-content: space-between;
-  display:flex;
+  display: flex;
   margin-left: 300px;
   padding-right: 100px;
 }
@@ -90,7 +84,4 @@ export default {
   text-decoration: underline;
   transform: scale(1.1);
 }
-
-
-
 </style>

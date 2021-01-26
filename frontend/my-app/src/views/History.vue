@@ -4,14 +4,11 @@
       <TopNavbar class="top"></TopNavbar>
     </header>
     <body>
-      <br>
-      <div class="centrar" v-for="produto of compra" :key="produto.id"> 
-        <CompraBarra v-bind:produto="produto"
-      ></CompraBarra>
+      <br />
+      <div class="centrar" v-for="produto of compra" :key="produto.id">
+        <CompraBarra v-bind:produto="produto"></CompraBarra>
       </div>
-      <br>
-      
-    
+      <br />
     </body>
   </div>
 </template>
@@ -20,6 +17,7 @@
 import CompraBarra from "../components/CompraBarra.vue";
 import TopNavbar from "../components/TopNavbar.vue";
 import axios from "axios";
+
 
 export default {
   name: "History",
@@ -31,7 +29,7 @@ export default {
     return {
       compra: [],
       listaCompras: [],
-    }
+    };
   },
   mounted() {
     this.getHistory();
@@ -45,19 +43,18 @@ export default {
         url: `http://localhost:3000/compra/cliente/` + idcli,
       }).then((response) => {
         this.listaCompras = response.data;
-        var indice = this.listaCompras.length; 
+        var indice = this.listaCompras.length;
 
-        while(indice != 0) {
-          this.compra.push(this.listaCompras[indice-1][0]);
-          indice = indice -1;
-          
+        while (indice != 0) {
+          this.compra.push(this.listaCompras[indice - 1][0]);
+          indice = indice - 1;
         }
 
         console.log(this.compra);
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style>
@@ -68,9 +65,7 @@ export default {
 }
 
 .cartoes {
-
-  float:left;
-
+  float: left;
 }
 
 body {
@@ -86,7 +81,4 @@ body {
   background-color: rgb(82, 82, 82);
   width: 100vw;
 }
-
-
 </style>
-

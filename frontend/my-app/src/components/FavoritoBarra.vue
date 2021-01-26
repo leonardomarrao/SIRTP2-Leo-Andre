@@ -1,25 +1,23 @@
 <template>
   <div class="linhaFavorito">
-     <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-    <img class="imgFavorito" :src="dataUrl" />
+    <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
+      <img class="imgFavorito" :src="dataUrl" />
     </router-link>
     <div class="containerFavorito">
       <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
         <p class="infoFavorito" id="nomeFavorito">{{ produto.nome }}</p>
       </router-link>
       <p class="infoFavorito">{{ produto.preco }} €</p>
-      <p class="infoFavorito">{{ produto.genero }} </p>
-      <p class="infoFavorito">{{ produto.classificacao }}/10 </p>
+      <p class="infoFavorito">{{ produto.genero }}</p>
+      <p class="infoFavorito">{{ produto.classificacao }}/10</p>
     </div>
   </div>
-  
 </template>
 
 <script>
 export default {
   name: "FavoritoBarra",
   data: function() {
-    console.log(produto);
     return {
       url: "",
     };
@@ -46,8 +44,7 @@ export default {
 </script>
 
 <style>
-
-.linhaFavorito{
+.linhaFavorito {
   background-color: rgba(133, 125, 125, 0.473);
   height: 160px;
   width: auto;
@@ -58,16 +55,16 @@ export default {
   border-radius: 17px;
 }
 
-.imgFavorito{
-  float:left;
+.imgFavorito {
+  float: left;
   height: 145px;
   border-radius: 15px;
   padding-top: 20px;
   cursor: pointer;
 }
 
-.infoFavorito{
-  float:left;
+.infoFavorito {
+  float: left;
   padding-top: 50px;
   font-size: 50px;
   font-family: Kenyan;
@@ -76,7 +73,7 @@ export default {
 
 .containerFavorito {
   justify-content: space-between;
-  display:flex;
+  display: flex;
   margin-left: 300px;
   padding-right: 100px;
 }
@@ -90,7 +87,4 @@ export default {
   text-decoration: underline;
   transform: scale(1.1);
 }
-
-
-
 </style>
