@@ -339,6 +339,58 @@ sirtp2db.insertCompra = (valor, data, idcli, idpro) => {
 
 };
 
+sirtp2db.allDetailsFromCompra = (idcli) => {
+    return new Promise((resolve,reject) => {
+        var listaProdutosOriginal = [];
+        var listaProdutosNova = [];
+        pool.query(`SELECT * FROM compra WHERE idcli = ?`, [idcli],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            else {       
+                getProds(results).then((res) => {
+                    resolve(res);
+                })   
+            }
+            /*
+            var indice = listaProdutosOriginal.length; 
+
+            while(indice != 0) {
+                listaProdutosNova.push(listaProdutosOriginal[indice-1][0]);
+                indice = indice -1;
+            
+            }
+            resolve(listaProdutosOriginal);
+            */
+        });
+    });
+
+    async function getProds(res) {
+        return await new Promise((resolve,reject) => {
+            var array = [];
+            for(var produto of res) {  
+                var promise = new Promise((resolve,reject) => {
+                    pool.query(`SELECT * FROM produto WHERE id = ?`, [produto.idpro],(err, res) => {
+                        if(err) {
+                             reject(err);
+                        }else {
+                            resolve(res);
+                        }  
+                    });
+                });
+                array.push(promise);
+            }
+            var final = [];
+            Promise.all(array).then((produto) => {
+                produto.forEach((rogerio) => {
+                    final.push(rogerio);
+                });
+                resolve(final);
+            });
+        });
+    }
+};
+
 //QUERIES AVALICAO
 
 sirtp2db.allAvaliacao = () => {
@@ -387,6 +439,48 @@ sirtp2db.removeAvaliacao = (idcli, idpro) => {
         });
     });
 
+};
+
+sirtp2db.insertOrRemoveAvaliacao = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM avaliacao WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            if(results.length < 1) {   
+                create(body).then((res) => {
+                    resolve("Avaliação Inserida"); 
+                })                                    
+            } 
+            else{
+                destroy(body).then((res) => {
+                    resolve("Avaliação Removida"); 
+                })
+            }
+        });
+    });
+
+    async function create(body) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`INSERT INTO avaliacao (idcli, idpro, classificacao, comentario) VALUES (?, ?, ?, ?)`, [body.idcli, body.idpro, body.classificacao, body.comentario],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    };
+
+    async function destroy(body) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`DELETE FROM avaliacao WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    };
 };
 
 //QUERIES FAVORITO
@@ -453,7 +547,7 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
     }
 
 };
-
+/*
 sirtp2db.insertFavorito = (idcli, idpro) => {
 
     return new Promise((resolve,reject) => {
@@ -488,37 +582,80 @@ sirtp2db.checkFavorito = (idcli, idpro) => {
         });
     });
 };
+*/
 
-sirtp2db.insertOrRemoveFavorito = (idcli, idpro, existe) => {
+sirtp2db.insertOrRemoveFavorito = (body) => {
     return new Promise((resolve,reject) => {
-        if([existe]) {
-            pool.query(`DELETE FROM favorito WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, resultsDel) => {
-                if(err) {
-                    return reject(err);
-                }
-                return resolve(resultsDel[0]);
-            });
-        } else {
-            pool.query(`INSERT INTO favorito (idcli, idpro) VALUES (?, ?)`, [idcli, idpro],(err, resultsIns) => {
-                if(err) {
-                    return reject(err);
-                }
-                return resolve(resultsIns[0]);
-            });
-        }
+        pool.query(`SELECT * FROM favorito WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            if(results.length < 1) {   
+                create(body).then((res) => {
+                    resolve("Favorito Inserido"); 
+                })                                    
+            } 
+            else{
+                destroy(body).then((res) => {
+                    resolve("Favorito Removido"); 
+                })
+            }
+        });
     });
+
+    async function create(body) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`INSERT INTO favorito (idcli, idpro) VALUES (?, ?)`, [body.idcli, body.idpro],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    };
+
+    async function destroy(body) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`DELETE FROM favorito WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    };
 };
 
 //LOGIN
 
-sirtp2db.login = (body) => {
+sirtp2db.loginTeste = (body) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
                 if(err){
-                    return reject(err);
+                    reject(err);
                 }
-                if(results.length < 1) {                   
-                    return reject({ mensagem: 'Falha na autenticação'});                 
+                if(results.length < 1) {   
+                    checkAdm(body).then((res) => {
+                        if(res.length < 1) {   
+                            reject({ mensagem: 'Falha na autenticação'});                                    
+                        } else{
+                            if(body.password == res[0].password) {
+                                const token = jwt.sign({
+                                    id: res[0].id,
+                                    username: res[0].username
+                                },
+                                'hahaxd',
+                                {
+                                    expiresIn: "5h"
+                                });                     
+                                resolve({                           
+                                    mensagem: 'Autenticado com sucesso',
+                                    token: token                       
+                                });
+                            } 
+                            reject({ mensagem: 'Falha na autenticação'});
+                        }
+                    })                                      
                 }
                 else {
                     if(body.password == results[0].password) {
@@ -539,18 +676,30 @@ sirtp2db.login = (body) => {
                 }    
         });
     });
-};
 
-//LOGIN
+    async function checkAdm(res) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`SELECT * FROM admin WHERE username = ?`, [res.username],(err, res) => {
+                if(err) {
+                    reject(err);
+                }
+                if(res.length < 1) {   
+                    reject({ mensagem: 'Falha na autenticação'});                                    
+                }
+                resolve(res);  
+            }); 
+        });
+    }
+};
 
 sirtp2db.login = (body) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
                 if(err){
-                    return reject(err);
+                    reject(err);
                 }
                 if(results.length < 1) {                   
-                    return reject({ mensagem: 'Falha na autenticação'});                 
+                    reject({ mensagem: 'Falha na autenticação'});                 
                 }
                 else {
                     if(body.password == results[0].password) {
@@ -562,12 +711,12 @@ sirtp2db.login = (body) => {
                         {
                             expiresIn: "5h"
                         });                     
-                        return resolve({                           
+                        resolve({                           
                             mensagem: 'Autenticado com sucesso',
                             token: token                       
                         });
                     } 
-                    return reject({ mensagem: 'Falha na autenticação'});
+                    reject({ mensagem: 'Falha na autenticação'});
                 }    
         });
     });
