@@ -27,6 +27,7 @@ export default {
 <style>
 .btnUT {
   text-decoration: none;
+  
 }
 
 nav {
@@ -39,6 +40,8 @@ nav {
   font-size: 25px;
 }
 nav .menu-itemUT {
+  padding-left: 50px;
+  padding-right: 50px;
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
