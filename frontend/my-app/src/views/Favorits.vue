@@ -4,11 +4,11 @@
       <TopNavbar class="top"></TopNavbar>
     </header>
     <body>
-      <div class="centrar" v-for="produto of favorito" :key="produto.id"> 
-        <FavoritoBarra v-bind:produto="produto"
-      ></FavoritoBarra>
+      <br />
+      <div class="centrar" v-for="produto of favorito" :key="produto.id">
+        <FavoritoBarra v-bind:produto="produto"></FavoritoBarra>
       </div>
-    
+      <br />
     </body>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
     return {
       favorito: [],
       listaFavoritos: [],
-    }
+    };
   },
   mounted() {
     this.getFavorits();
@@ -42,19 +42,18 @@ export default {
         url: `http://localhost:3000/favorito/cliente/` + idcli,
       }).then((response) => {
         this.listaFavoritos = response.data;
-        var indice = this.listaFavoritos.length; 
+        var indice = this.listaFavoritos.length;
 
-        while(indice != 0) {
-          this.favorito.push(this.listaFavoritos[indice-1][0]);
-          indice = indice -1;
-          
+        while (indice != 0) {
+          this.favorito.push(this.listaFavoritos[indice - 1][0]);
+          indice = indice - 1;
         }
 
         console.log(this.favorito);
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style>
@@ -65,9 +64,7 @@ export default {
 }
 
 .cartoes {
-
-  float:left;
-
+  float: left;
 }
 
 body {
@@ -83,7 +80,4 @@ body {
   background-color: rgb(82, 82, 82);
   width: 100vw;
 }
-
-
 </style>
-

@@ -1,15 +1,15 @@
 <template>
-  <div class="linhaFavorito">
+  <div class="linhaCompra">
      <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-    <img class="imgFavorito" :src="dataUrl" />
+    <img class="imgCompra" :src="dataUrl" />
     </router-link>
-    <div class="containerFavorito">
+    <div class="containerCompra">
       <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-        <p class="infoFavorito" id="nomeFavorito">{{ produto.nome }}</p>
+        <p class="infoCompra" id="nomeCompra">{{ produto.nome }}</p>
       </router-link>
-      <p class="infoFavorito">{{ produto.preco }} €</p>
-      <p class="infoFavorito">{{ produto.genero }} </p>
-      <p class="infoFavorito">{{ produto.classificacao }}/10 </p>
+      <p class="infoCompra">{{ produto.preco }} €</p>
+      <p class="infoCompra">{{ produto.genero }} </p>
+      <p class="infoCompra">{{ produto.classificacao }}/10 </p>
     </div>
   </div>
   
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "FavoritoBarra",
+  name: "CompraBarra",
   data: function() {
     console.log(produto);
     return {
@@ -47,7 +47,7 @@ export default {
 
 <style>
 
-.linhaFavorito{
+.linhaCompra{
   background-color: rgba(133, 125, 125, 0.473);
   height: 160px;
   width: auto;
@@ -58,7 +58,7 @@ export default {
   border-radius: 17px;
 }
 
-.imgFavorito{
+.imgCompra{
   float:left;
   height: 145px;
   border-radius: 15px;
@@ -66,7 +66,7 @@ export default {
   cursor: pointer;
 }
 
-.infoFavorito{
+.infoCompra{
   float:left;
   padding-top: 50px;
   font-size: 50px;
@@ -74,19 +74,19 @@ export default {
   color: white;
 }
 
-.containerFavorito {
+.containerCompra {
   justify-content: space-between;
   display:flex;
   margin-left: 300px;
   padding-right: 100px;
 }
 
-#nomeFavorito {
+#nomeCompra {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-#nomeFavorito:hover {
+#nomeCompra:hover {
   text-decoration: underline;
   transform: scale(1.1);
 }

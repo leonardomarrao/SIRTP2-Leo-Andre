@@ -6,6 +6,7 @@
     <div class="container">
         <p class="nome">{{ produto.nome }}</p>
         <p class="nome">{{ produto.preco }} €</p>    
+        <p class="nome">Classificação: {{ produto.classificacao }}/10</p>   
     </div>
   </div>
   </router-link>
@@ -47,7 +48,7 @@ export default {
 .card {
   margin: 30px;
   width: 300px;
-  height: 355px;
+  height: 390px;
   border-radius: 10px;
   background-color: rgba(68, 65, 65, 0.39);
   transition: box-shadow 0.3s;

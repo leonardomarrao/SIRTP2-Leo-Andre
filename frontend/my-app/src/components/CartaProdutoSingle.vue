@@ -66,7 +66,8 @@ export default {
   height: 300px;
   width: 200px;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
+  transition: all 0.4s ease-in-out;
 }
 
 .imagem:hover {
