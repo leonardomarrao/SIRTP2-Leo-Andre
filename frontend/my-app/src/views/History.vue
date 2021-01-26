@@ -2,6 +2,7 @@
   <div class="home">
     <header>
       <TopNavbar class="top"></TopNavbar>
+      <NavbarUtilizador></NavbarUtilizador>
     </header>
     <body>
       <br />
@@ -16,14 +17,15 @@
 <script>
 import CompraBarra from "../components/CompraBarra.vue";
 import TopNavbar from "../components/TopNavbar.vue";
+import NavbarUtilizador from "../components/NavbarUtilizador.vue";
 import axios from "axios";
-
 
 export default {
   name: "History",
   components: {
     TopNavbar,
     CompraBarra,
+    NavbarUtilizador,
   },
   data() {
     return {
@@ -49,8 +51,8 @@ export default {
           this.compra.push(this.listaCompras[indice - 1][0]);
           indice = indice - 1;
         }
-
-        console.log(this.compra);
+        
+        console.log("esse " + this.compra + "carlos");
       });
     },
   },

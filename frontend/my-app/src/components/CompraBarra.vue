@@ -1,12 +1,11 @@
 <template>
   <div class="linhaCompra">
-    <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-      <img class="imgCompra" :src="dataUrl" />
-    </router-link>
+
     <div class="containerCompra">
       <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-        <p class="infoCompra" id="nomeCompra">{{ produto.nome }}</p>
+        <p class="infoCompra" id="nomeCompra">{{ produto.id }}</p>
       </router-link>
+
     </div>
   </div>
 </template>
