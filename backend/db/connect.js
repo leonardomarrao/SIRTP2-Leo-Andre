@@ -215,6 +215,28 @@ sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, 
 
 };
 
+sirtp2db.getProdutoComMaiorAvaliacao = () => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM produto WHERE classificacao = (SELECT MAX(classificacao) FROM produto);`,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+sirtp2db.getProdutosWithThisCharacter = (nome) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM produto WHERE nome LIKE '${nome}%';`,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 //QUERIES CLIENTE
 
 sirtp2db.allCliente = () => {
@@ -252,29 +274,49 @@ sirtp2db.insertCliente = (username, password, nome, email) => {
 
 };
 
-sirtp2db.updateNomeCliente = (nome, id) => {
-
+sirtp2db.updateDadosCliente = (password, nome, email, id) => {
     return new Promise((resolve,reject) => {
-        pool.query(`UPDATE cliente SET nome = ? WHERE id = ?`, [nome, id],(err, results) => {
+        var nomeAtual = "";
+        var emailAtual = "";
+        var passwordAtual = "";
+        var idAtual = "";
+        pool.query(`SELECT * FROM cliente WHERE id = ?`, [id],(err, results) => {
             if(err) {
-                return reject(err);
+                reject(err);
             }
-            return resolve(results[0]);
+            else {
+                nomeAtual = results[0].nome;
+                emailAtual = results[0].email;
+                passwordAtual = results[0].password;
+                idAtual = id;
+
+                if(nome != null && nome != '') {
+                    nomeAtual = nome;
+                }
+                if(email != null && email != '') {
+                    emailAtual = email;
+                }
+                if(password != null && password != '') {
+                    passwordAtual = password;
+                }
+
+                updateDados(nomeAtual, emailAtual, passwordAtual, idAtual).then((res) => {
+                    resolve("Dados Atualizados Com Sucesso");
+                }); 
+            }
         });
     });
 
-};
-
-sirtp2db.updateTesteCliente = (password, nome, email, id) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`UPDATE cliente SET password = ?, nome = ?, email = ? WHERE id = ?`, [password, nome, email, id],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
+    async function updateDados(nomeAtual, emailAtual, passwordAtual, idAtual) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`UPDATE cliente SET password = ?, nome = ?, email = ? WHERE id = ?`, [passwordAtual, nomeAtual, emailAtual, idAtual],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results);
+            });
         });
-    });
+    }
 
 };
 
@@ -343,27 +385,43 @@ sirtp2db.allDetailsFromCompra = (idcli) => {
     return new Promise((resolve,reject) => {
         var listaProdutosOriginal = [];
         var listaProdutosNova = [];
+        var datas = [];
         pool.query(`SELECT * FROM compra WHERE idcli = ?`, [idcli],(err, results) => {
             if(err) {
                 reject(err);
             }
-            else {       
+            else {   
+                if (Array.isArray(datas) && !datas.length) {
+                    // array exists and is not empty
+                    getDatas(idcli).then((res) => {
+                        datas = res;
+                        console.log(datas);
+                    }); 
+                }
+                
                 getProds(results).then((res) => {
-                    resolve(res);
-                })   
+                    listaProdutosOriginal = res;
+                    var i = 0;
+                    for(var reg of listaProdutosOriginal) {
+                        listaProdutosNova.push({produto : reg, data : datas[i].data})
+                        i = i + 1;
+                    }
+                    resolve(listaProdutosNova);
+                });   
             }
-            /*
-            var indice = listaProdutosOriginal.length; 
-
-            while(indice != 0) {
-                listaProdutosNova.push(listaProdutosOriginal[indice-1][0]);
-                indice = indice -1;
-            
-            }
-            resolve(listaProdutosOriginal);
-            */
         });
     });
+
+    async function getDatas(idcli) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`SELECT data FROM compra WHERE idcli = ?`, [idcli],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results);
+            });
+        });
+    }
 
     async function getProds(res) {
         return await new Promise((resolve,reject) => {
@@ -417,32 +475,6 @@ sirtp2db.oneAvaliacao = (id) => {
             return resolve(results[0]);
         });
     });
-};
-
-sirtp2db.insertAvaliacao = (idcli, idpro, classificacao, comentario) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`INSERT INTO avaliacao (idcli, idpro, classificacao, comentario) VALUES (?, ?, ?, ?)`, [idcli, idpro, classificacao, comentario],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-
-};
-
-sirtp2db.removeAvaliacao = (idcli, idpro) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`DELETE FROM avaliacao WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, results) => {
-            if(err) {
-                return reject(err);
-            }   
-            return resolve(results[0]);
-        });
-    });
-
 };
 
 sirtp2db.insertOrRemoveAvaliacao = (body) => {
@@ -554,42 +586,6 @@ sirtp2db.allFavoritoFromCliente = (idcli) => {
     }
 
 };
-/*
-sirtp2db.insertFavorito = (idcli, idpro) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`INSERT INTO favorito (idcli, idpro) VALUES (?, ?)`, [idcli, idpro],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-};
-
-sirtp2db.removeFavorito = (idcli, idpro) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`DELETE FROM favorito WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-};
-
-sirtp2db.checkFavorito = (idcli, idpro) => {
-    return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM favorito WHERE idcli = ? AND idpro = ?`, [idcli, idpro],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-};
-*/
 
 sirtp2db.insertOrRemoveFavorito = (body) => {
     return new Promise((resolve,reject) => {
