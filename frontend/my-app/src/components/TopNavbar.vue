@@ -8,11 +8,31 @@
         v-model="search"
         placeholder="pesquisa..."
       /> -->
-      <router-link :to="{path: '/login'}" tag="div" class="btnLogin"><img class="login" src="../assets/login.png" /></router-link>
+      <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin">Login</router-link>
+      <button v-else v-on:click="clearStorage()">Logout</button>
+      
     </div>
      
   </nav>
 </template>
+
+<script>
+export default {
+  
+  name: "TopNavBar",
+  data() {
+    return {
+      user: localStorage.getItem('user')
+    };
+  },
+  methods: {
+    clearStorage() {
+      localStorage.clear();
+      window.location.href = '/';
+    }
+  }
+};
+</script>
 
 <style>
 img {

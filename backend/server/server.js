@@ -204,7 +204,7 @@ app.get('/containsName/:nome', async(req, res) => {
 app.get('/cliente/', async(req, res) => {
 
     try {
-        let results = await db.allCliente();
+        let results = await db.cliente(req,res);
         res.json(results);
     } catch (error) {
         console.log(error);
@@ -227,11 +227,10 @@ app.get('/cliente/:id', async(req, res) => {
 
 app.post('/cliente/insert', async(req, res) => {
     try {
-        let results = await db.insertCliente(req.body.username, req.body.password, req.body.passwordConf, req.body.nome, req.body.email);
+        let results = await db.insertCliente(req.body);
         res.json(results);
     } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
+        res.status(401).send(error);
     }
 
 });

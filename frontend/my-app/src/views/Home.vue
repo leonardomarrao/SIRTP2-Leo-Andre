@@ -11,10 +11,25 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
+<<<<<<< HEAD
 import Destaque from "../components/Destaque.vue";
+=======
+>>>>>>> 15462bba4f40b2aebaf18153361004eafb2ae4a9
 import axios from "axios";
 export default {
   name: "Home",
+  async created() {
+      console.log(this.user);
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/cliente`, 
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      console.log(response.data[0].username);
+      this.user = response.data[0].username;
+    },
   components: {
     Navbar,
     TopNavbar,
@@ -22,6 +37,7 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       produto: {imagemDestaque: {data: {}}}
     }
   },
@@ -38,6 +54,19 @@ export default {
       }).then((response) => {
         this.produto = response.data[0];
       })
+=======
+      users: [],
+      user: "teste"
+    };
+  },
+  mounted: {
+    
+  },
+  methods: {
+    clearStorage() {
+      localStorage.clear();
+
+>>>>>>> 15462bba4f40b2aebaf18153361004eafb2ae4a9
     }
   }
 };
