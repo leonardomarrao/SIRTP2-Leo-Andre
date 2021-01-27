@@ -59,6 +59,7 @@ export default {
   color: white;
   font-family: Kenyan;
   font-size: 20px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .card:hover {
@@ -71,5 +72,7 @@ export default {
   color: rgb(255, 255, 255);
   font-family: Kenyan;
   font-size: 20px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
 </style>
