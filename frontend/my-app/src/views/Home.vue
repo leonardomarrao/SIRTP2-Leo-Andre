@@ -10,9 +10,22 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
+import axios from "axios";
 export default {
   
   name: "Home",
+  async created() {
+      console.log(this.user);
+      const response = await axios({
+        method: "get",
+        url: `http://localhost:3000/cliente`, 
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+      console.log(response.data[0].username);
+      this.user = response.data[0].username;
+    },
   components: {
     Navbar,
     TopNavbar,
@@ -20,8 +33,18 @@ export default {
   data() {
     return {
       users: [],
+      user: "teste"
     };
   },
+  mounted: {
+    
+  },
+  methods: {
+    clearStorage() {
+      localStorage.clear();
+
+    }
+  }
 };
 </script>
 

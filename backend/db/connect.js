@@ -13,6 +13,33 @@ const pool = mysql.createPool({
 
 let sirtp2db = {};
 
+//VALIDATE TOKEN
+
+function validateToken(req, res){
+
+    var user;
+
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null){
+        res.status(401).send("Efetue login para poder aceder a esta funcionalidade");
+        return;
+    }
+
+    jwt.verify(token, 'tokenkey', (error, u) => {
+
+        if(error){
+            console.log(error);
+            res.status(403).send("A sua sessão expirou. Faça login novamente.");
+            return;
+        } else {
+            user = u;
+        }
+    });
+
+    return user;
+}
+
 //QUERIES PRODUTO
 
 sirtp2db.allProduto = () => {
@@ -292,15 +319,19 @@ sirtp2db.getProdutosWithThisCharacter = (nome) => {
 
 //QUERIES CLIENTE
 
-sirtp2db.allCliente = () => {
-    return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente`,(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results);
+sirtp2db.cliente = (req,res) => {
+    var user = validateToken(req,res);
+    if(user) {
+        return new Promise((resolve,reject) => {
+            pool.query(`SELECT * FROM cliente WHERE username = ?`, [user.username],(err, results) => {
+                if(err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            });
         });
-    });
+    }
+
 };
 
 sirtp2db.oneCliente = (id) => {
@@ -314,63 +345,33 @@ sirtp2db.oneCliente = (id) => {
     });
 };
 
-sirtp2db.insertCliente = (username, password, passwordConf, nome, email) => {
-
+sirtp2db.insertCliente = (body) => {
     return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente`,(err, results) => {
-            if(err) {
-                reject(err);
-            } else {
-                checkDados(results, username, password, nome, email).then((res) => {
-                    console.log("check1");
-                    if(!res) {
-                        console.log("check2");
-                        reject({ mensagem: 'Erro na função de processamento de dados!'});
-                    } else {
-                        inserirCliente(username, password, nome, email).then((res) => {
-                            console.log("check3");
-                            resolve("Cliente registado com sucesso");
-                        });
-                    }
-                });
-            }
-        });
-    });
-
-    async function checkDados(results, username, password, nome, email) {
-        return await new Promise((resolve,reject) => {
-            for(var res of results) {
-                if(res.username == username) {
-                    reject({ mensagem: 'Este nome de usuário já esta registado!'}); 
-                }
-                if(res.email == email) {
-                    reject({ mensagem: 'Este email já esta registado!'}); 
-                }
-            }
-            if(password != passwordConf) {
-                reject({ mensagem: 'Password e confirmação não coincidem!'}); 
-            }
-            if(username == "admin") {
-                reject({ mensagem: 'Nome de usuário indisponivel!'}); 
-            }
-            if(email == "admin@ipvc.pt") {
-                reject({ mensagem: 'Email indisponivel!'}); 
-            }
-            resolve(true);
-        });
-    }
-
-    async function inserirCliente(username, password, nome, email) {
-        return await new Promise((resolve,reject) => {
-            pool.query(`INSERT INTO cliente (username, password, nome, email) VALUES (?, ?, ?, ?)`, [username, password, nome, email],(err, results) => {
-                if(err) {
+        pool.query(`SELECT * FROM cliente where username = ? OR email = ?`,[body.username, body.email],(err, results) => {
+                if(err){
                     reject(err);
                 }
-                resolve(results[0]);
-            });
-        });
-    }
+                if(results.length < 1) {
+                    if(body.username == "admin") {
+                        reject({ mensagem: 'Nome de usuario indisponivel'});
+                    }
+                    if(body.email == "admin@ipvc.pt") {
+                        reject({ mensagem: 'Email indisponivel'});
+                    }
+                    pool.query(`INSERT INTO cliente (username,password,nome,email) values (?,?,?,?)`,[body.username, body.password, body.nome, body.email],(err, results) => { 
+                        if(err){
+                            reject(err);
+                        }
 
+                        resolve({ mensagem: `Utilizador ${body.username} registado com sucesso`});
+                    });
+
+                }
+                else {
+                    reject({ mensagem: 'Ja existe esse utilizador ou email'});
+                }
+        });
+    });
 };
 
 sirtp2db.updateDadosCliente = (password, nome, email, id) => {
@@ -749,7 +750,7 @@ sirtp2db.login = (body) => {
                                     id: res[0].id,
                                     username: res[0].username
                                 },
-                                'hahaxd',
+                                'tokenkey',
                                 {
                                     expiresIn: "5h"
                                 });                     
@@ -768,7 +769,7 @@ sirtp2db.login = (body) => {
                             id: results[0].id,
                             username: results[0].username
                         },
-                        'hahaxd',
+                        'tokenkey',
                         {
                             expiresIn: "5h"
                         });                     
@@ -796,5 +797,6 @@ sirtp2db.login = (body) => {
         });
     }
 };
+
 
 module.exports = sirtp2db;

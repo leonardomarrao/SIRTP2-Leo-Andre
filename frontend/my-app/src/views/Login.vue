@@ -10,7 +10,7 @@
             <p class="textoLogin">Login</p>
             <input class="inputlogin" v-model="username" placeholder="Nome de Usuário..."><br><br>
             <input class="inputlogin" v-model="password" type="password" placeholder="Palavra Chave..."><br><br>
-            <input class="btnlogin" v-on:click="handleSubmit()" type="submit"  value="Entrar"><br>
+            <input class="btnlogin" type="submit"  value="Entrar"><br>
             <router-link :to="{path: '/registar'}" tag="button" class="btnreglogin">Registar</router-link>
         </div>
       </form>
@@ -36,9 +36,6 @@ export default {
         user: {}
     }
   },
-  mounted() {
-    
-  },
   methods: {
     async handleSubmit() {
       const response = await axios({
@@ -48,8 +45,12 @@ export default {
             username: this.username,
             password: this.password
           }
-      })
-      console.log(response);  
+      }).then((response) => {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', this.username);
+        this.$router.push('/');
+      });
+        
     }
   }
     
