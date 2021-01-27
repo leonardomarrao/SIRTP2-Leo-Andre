@@ -11,10 +11,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import TopNavbar from "../components/TopNavbar.vue";
-<<<<<<< HEAD
 import Destaque from "../components/Destaque.vue";
-=======
->>>>>>> 15462bba4f40b2aebaf18153361004eafb2ae4a9
 import axios from "axios";
 export default {
   name: "Home",
@@ -37,8 +34,9 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
-      produto: {imagemDestaque: {data: {}}}
+      produto: {imagemDestaque: {data: {}}},
+      users: [],
+      user: "teste"
     }
   },
   mounted() {
@@ -54,19 +52,6 @@ export default {
       }).then((response) => {
         this.produto = response.data[0];
       })
-=======
-      users: [],
-      user: "teste"
-    };
-  },
-  mounted: {
-    
-  },
-  methods: {
-    clearStorage() {
-      localStorage.clear();
-
->>>>>>> 15462bba4f40b2aebaf18153361004eafb2ae4a9
     }
   }
 };
