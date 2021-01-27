@@ -142,53 +142,9 @@ app.put('/produto/:id/updateDadosProduto', async(req, res) => {
 
 });
 
-app.put('/produto/:id/updatepreco', async(req, res) => {
-    try {
-        let results = await db.updatePrecoProduto(req.body.preco, req.params.id);
-        res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-
-});
-
-app.put('/produto/:id/updatestock', async(req, res) => {
-    try {
-        let results = await db.updateStockProduto(req.body.stock, req.params.id);
-        res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-
-});
-
 app.put('/produto/:id/updatestockcompra', async(req, res) => {
     try {
         let results = await db.updateStockProdutoAfterSale(req.params.id);
-        res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-
-});
-
-app.put('/produto/:id/updateclassificacao', async(req, res) => {
-    try {
-        let results = await db.updateClassificacaoProduto(req.body.classificacao, req.params.id);
-        res.json(results);
-    } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-
-});
-
-app.put('/produto/:id/updateativo', async(req, res) => {
-    try {
-        let results = await db.updateAtivoProduto(req.body.ativo, req.params.id);
         res.json(results);
     } catch (error) {
         console.log(error);
@@ -271,7 +227,7 @@ app.get('/cliente/:id', async(req, res) => {
 
 app.post('/cliente/insert', async(req, res) => {
     try {
-        let results = await db.insertCliente(req.body.username, req.body.password, req.body.nome, req.body.email);
+        let results = await db.insertCliente(req.body.username, req.body.password, req.body.passwordConf, req.body.nome, req.body.email);
         res.json(results);
     } catch (error) {
         console.log(error);
@@ -457,18 +413,6 @@ app.post('/login/', async(req, res) => {
 
     try {
         let results = await db.login(req.body);
-        res.json(results);
-    } catch (error) {
-
-        res.status(401).send(error);
-    }
-
-});
-
-app.post('/loginTeste/', async(req, res) => {
-
-    try {
-        let results = await db.loginTeste(req.body);
         res.json(results);
     } catch (error) {
 

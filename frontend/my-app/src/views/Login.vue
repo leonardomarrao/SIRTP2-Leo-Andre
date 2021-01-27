@@ -5,13 +5,15 @@
       <Navbar class = "bottom"></Navbar>
     </header>
     <body>
+      <form @submit.prevent="handleSubmit">
         <div class="logindiv">
             <p class="textoLogin">Login</p>
             <input class="inputlogin" v-model="username" placeholder="Nome de Usuário..."><br><br>
             <input class="inputlogin" v-model="password" type="password" placeholder="Palavra Chave..."><br><br>
-            <input class="btnlogin" v-on:click="check()" type="submit"  value="Entrar"><br>
+            <input class="btnlogin" v-on:click="handleSubmit()" type="submit"  value="Entrar"><br>
             <router-link :to="{path: '/registar'}" tag="button" class="btnreglogin">Registar</router-link>
         </div>
+      </form>
     </body>
   </div>
 </template>
@@ -28,55 +30,29 @@ export default {
   },
   data() {
     return {
-        users: [],
         username: '',
         password: '',
-        existe: false
+        existe: false,
+        user: {}
     }
   },
   mounted() {
-    //OUT
-    this.getCliente();
+    
   },
   methods: {
-    //OUT
-    getCliente() {
-      axios({
-        method: "get",
-        url: `http://localhost:3000/cliente`, 
-        
-      }).then((response) => {
-        this.users = response.data;
-      })
-    },
-    check: function () {
-        for(var user of this.users) {
-          if(user.username == this.username && user.password == this.password) {
-            this.existe = true;
-            this.$store.commit("setUser", user);
-          }
-        }
-        if(!this.existe) {
-          console.log("Nao existe utilizador");
-        }else {
-          console.log("IN LOGGIN USERNAME AND PASSWORD: " + this.$store.getters.getInfo.user.username + " " + this.$store.getters.getInfo.user.password);
-        }
-/*
-        axios({
-        method: "get",
+    async handleSubmit() {
+      const response = await axios({
+        method: "post",
         url: `http://localhost:3000/login`, 
         data: {
             username: this.username,
             password: this.password
           }
-      }).then((response) => {
-        this.users = response.data;
-        this.existe = true;
-      })   
-      */
+      })
+      console.log(response);  
     }
-    
   }
+    
 };
 </script>
 

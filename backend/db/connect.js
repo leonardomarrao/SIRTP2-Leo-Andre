@@ -242,62 +242,10 @@ sirtp2db.updateDadosProduto = (body) => {
 
 };
 
-sirtp2db.updatePrecoProduto = (preco, id) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`UPDATE produto SET preco = ? WHERE id = ?`, [preco, id],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-
-};
-
-sirtp2db.updateStockProduto = (stock, id) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`UPDATE produto SET stock = ? WHERE id = ?`, [stock, id],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-
-};
-
 sirtp2db.updateStockProdutoAfterSale = (id) => {
 
     return new Promise((resolve,reject) => {
         pool.query(`UPDATE produto SET stock = stock - 1 WHERE id = ?`, [id],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-
-};
-
-sirtp2db.updateClassificacaoProduto = (classificacao, id) => {
-
-    return new Promise((resolve,reject) => {
-        pool.query(`UPDATE produto SET classificacao = ? WHERE id = ?`, [classificacao, id],(err, results) => {
-            if(err) {
-                return reject(err);
-            }
-            return resolve(results[0]);
-        });
-    });
-
-};
-
-sirtp2db.updateAtivoProduto = (ativo, id) => {
-    
-    return new Promise((resolve,reject) => {
-        pool.query(`UPDATE produto SET ativo = ? WHERE id = ?`, [ativo, id],(err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -366,16 +314,62 @@ sirtp2db.oneCliente = (id) => {
     });
 };
 
-sirtp2db.insertCliente = (username, password, nome, email) => {
+sirtp2db.insertCliente = (username, password, passwordConf, nome, email) => {
 
     return new Promise((resolve,reject) => {
-        pool.query(`INSERT INTO cliente (username, password, nome, email) VALUES (?, ?, ?, ?)`, [username, password, nome, email],(err, results) => {
+        pool.query(`SELECT * FROM cliente`,(err, results) => {
             if(err) {
-                return reject(err);
+                reject(err);
+            } else {
+                checkDados(results, username, password, nome, email).then((res) => {
+                    console.log("check1");
+                    if(!res) {
+                        console.log("check2");
+                        reject({ mensagem: 'Erro na função de processamento de dados!'});
+                    } else {
+                        inserirCliente(username, password, nome, email).then((res) => {
+                            console.log("check3");
+                            resolve("Cliente registado com sucesso");
+                        });
+                    }
+                });
             }
-            return resolve(results[0]);
         });
     });
+
+    async function checkDados(results, username, password, nome, email) {
+        return await new Promise((resolve,reject) => {
+            for(var res of results) {
+                if(res.username == username) {
+                    reject({ mensagem: 'Este nome de usuário já esta registado!'}); 
+                }
+                if(res.email == email) {
+                    reject({ mensagem: 'Este email já esta registado!'}); 
+                }
+            }
+            if(password != passwordConf) {
+                reject({ mensagem: 'Password e confirmação não coincidem!'}); 
+            }
+            if(username == "admin") {
+                reject({ mensagem: 'Nome de usuário indisponivel!'}); 
+            }
+            if(email == "admin@ipvc.pt") {
+                reject({ mensagem: 'Email indisponivel!'}); 
+            }
+            resolve(true);
+        });
+    }
+
+    async function inserirCliente(username, password, nome, email) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`INSERT INTO cliente (username, password, nome, email) VALUES (?, ?, ?, ?)`, [username, password, nome, email],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    }
 
 };
 
@@ -739,7 +733,7 @@ sirtp2db.insertOrRemoveFavorito = (body) => {
 
 //LOGIN
 
-sirtp2db.loginTeste = (body) => {
+sirtp2db.login = (body) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
                 if(err){
@@ -801,36 +795,6 @@ sirtp2db.loginTeste = (body) => {
             }); 
         });
     }
-};
-
-sirtp2db.login = (body) => {
-    return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente where username = ?`,[body.username],(err, results) => {
-                if(err){
-                    reject(err);
-                }
-                if(results.length < 1) {                   
-                    reject({ mensagem: 'Falha na autenticação'});                 
-                }
-                else {
-                    if(body.password == results[0].password) {
-                        const token = jwt.sign({
-                            id: results[0].id,
-                            username: results[0].username
-                        },
-                        'hahaxd',
-                        {
-                            expiresIn: "5h"
-                        });                     
-                        resolve({                           
-                            mensagem: 'Autenticado com sucesso',
-                            token: token                       
-                        });
-                    } 
-                    reject({ mensagem: 'Falha na autenticação'});
-                }    
-        });
-    });
 };
 
 module.exports = sirtp2db;
