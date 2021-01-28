@@ -1,19 +1,19 @@
 <template>
   <nav>
-    <!--
+   <!--  
     <a class="btn" href="/pesquisa/playstation"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></a>
     <a class="btn" href="/pesquisa/xbox"><div class="menu-item"><img class="bottonNimg" src="../assets/xboxlogo.png"/></div></a>
     <a class="btn" href="/pesquisa/nintendo"><div class="menu-item"><img class="bottonNimg" src="../assets/nintendologo.png"/></div></a>
     <a class="btn" href="/pesquisa/pc"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></a>
     <a class="btn" href="/pesquisa/retro"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></a>
--->
-    
+ -->
+   
     <router-link :to="{path: '/pesquisa/playstation'}" v-on:click.native="setPlatPS()" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/playstationlogo.png"/></div></router-link>
     <router-link :to="{path: '/pesquisa/xbox'}" v-on:click.native="setPlatXB()" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/xboxlogo.png"/></div></router-link>
     <router-link :to="{path: '/pesquisa/nintendo'}" v-on:click.native="setPlatNI()" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/nintendologo.png"/></div></router-link>
     <router-link :to="{path: '/pesquisa/pc'}" v-on:click.native="setPlatPC()" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/pclogo.png"/></div></router-link>
     <router-link :to="{path: '/pesquisa/retro'}" v-on:click.native="setPlatRE()" tag="div" class="btn"><div class="menu-item"><img class="bottonNimg" src="../assets/retrologo.png"/></div></router-link>
-    
+  
   </nav>
 </template>
 

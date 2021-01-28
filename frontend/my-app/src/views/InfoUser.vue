@@ -52,8 +52,7 @@ export default {
         method: "get",
         url: `http://localhost:3000/cliente/` + this.user,
       }).then((response) => {
-        this.cliente = response.data[0];
-        console.log("CLIENTE: "+this.cliente);
+        this.cliente = response.data;
         
       })
     }

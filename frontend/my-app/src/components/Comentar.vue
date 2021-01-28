@@ -1,13 +1,14 @@
 <template>
   <div class="comentarios">
     <div class="comentar">
-      <form action="/produto/"> 
         <label for="comentario" class="textoAntesComentar"
           >Adicionar comentário:</label>
         <input
           type="text"
           id="comentarioInserido"
           name="comentarioInserido"
+          v-model="comentarioInserido"
+          maxlength="500"
           class="inputsComentarios"
         /><br /><br />
         <label for="nota" class="textoAntesComentar">Nota de 0 a 10:</label>
@@ -22,16 +23,15 @@
         <input
           type="submit"
           id="btnComentar"
-          v-model="comentarioInserido"
+          value="Inserir Comentario"
           v-on:click="insertCommentary()"
-          maxlength="500"
         />
-      </form>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Comentar",
   data() {
@@ -46,10 +46,9 @@ export default {
   methods:{
     insertCommentary(){
       var idprod = this.$route.params.id;
-      console.log(id);
       axios({
         method: "post",
-        url: `http://localhost:3000/insertAvaliacao`,
+        url: `http://localhost:3000/avaliacao/insertAvaliacao`,
         data:{
           idcli: this.idcli,
           idpro: idprod,
@@ -59,7 +58,7 @@ export default {
       }).then((response) => {
         this.listaComentarios = response.data;
         console.log(this.listaComentarios);
-        
+        window.location.href = '/produto/'+idprod;
       })
     }
   }

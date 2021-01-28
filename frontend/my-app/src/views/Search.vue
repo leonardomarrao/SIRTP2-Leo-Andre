@@ -42,11 +42,13 @@ export default {
     CartaProduto,
   },
   data() {
+    console.log("CHECK SEARCH");
     return {
       lista: [],
       listaGeneros: [],
       listaGenerosPlataforma: [],
-      plataforma: this.$store.getters.getPlataforma,
+      plataforma: this.$route.params.plataforma, 
+      Storedplataforma: this.$store.getters.getPlataforma,
       generoEscolhido: "",
     };
   },
