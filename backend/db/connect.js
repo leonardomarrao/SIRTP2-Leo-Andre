@@ -325,13 +325,24 @@ sirtp2db.cliente = (req,res) => {
         return new Promise((resolve,reject) => {
             pool.query(`SELECT * FROM cliente WHERE username = ?`, [user.username],(err, results) => {
                 if(err) {
-                    return reject(err);
+                    reject(err);
                 }
-                return resolve(results);
+                resolve(results);
             });
         });
     }
 
+};
+
+sirtp2db.allCliente = () => {   
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM cliente WHERE username = ?`, [user.username],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
 };
 
 sirtp2db.oneCliente = (id) => {
@@ -341,35 +352,6 @@ sirtp2db.oneCliente = (id) => {
                 return reject(err);
             }
             return resolve(results[0]);
-        });
-    });
-};
-
-sirtp2db.insertCliente = (body) => {
-    return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente where username = ? OR email = ?`,[body.username, body.email],(err, results) => {
-                if(err){
-                    reject(err);
-                }
-                if(results.length < 1) {
-                    if(body.username == "admin") {
-                        reject({ mensagem: 'Nome de usuario indisponivel'});
-                    }
-                    if(body.email == "admin@ipvc.pt") {
-                        reject({ mensagem: 'Email indisponivel'});
-                    }
-                    pool.query(`INSERT INTO cliente (username,password,nome,email) values (?,?,?,?)`,[body.username, body.password, body.nome, body.email],(err, results) => { 
-                        if(err){
-                            reject(err);
-                        }
-
-                        resolve({ mensagem: `Utilizador ${body.username} registado com sucesso`});
-                    });
-
-                }
-                else {
-                    reject({ mensagem: 'Ja existe esse utilizador ou email'});
-                }
         });
     });
 };
@@ -773,12 +755,12 @@ sirtp2db.login = (body) => {
                         {
                             expiresIn: "5h"
                         });                     
-                        return resolve({                           
+                        resolve({                           
                             mensagem: 'Autenticado com sucesso',
                             token: token                       
                         });
                     } 
-                    return reject({ mensagem: 'Falha na autenticação'});
+                    reject({ mensagem: 'Falha na autenticação'});
                 }    
         });
     });
@@ -798,5 +780,38 @@ sirtp2db.login = (body) => {
     }
 };
 
+//REGISTAR
+
+sirtp2db.registarCliente = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT * FROM cliente where username = ? OR email = ?`,[body.username, body.email],(err, results) => {
+                if(err){
+                    reject(err);
+                }
+                if(results.length < 1) {
+                    if(body.username == "admin") {
+                        reject({ mensagem: 'Nome de usuario indisponivel'});
+                    }
+                    if(body.email == "admin@ipvc.pt") {
+                        reject({ mensagem: 'Email indisponivel'});
+                    }
+                    if(body.password != body.passwordConf) {
+                        reject({ mensagem: 'Password e confirmação não coincidem'});
+                    }
+                    pool.query(`INSERT INTO cliente (username,password,nome,email) values (?,?,?,?)`,[body.username, body.password, body.nome, body.email],(err, results) => { 
+                        if(err){
+                            reject(err);
+                        }
+
+                        resolve({ mensagem: `Utilizador ${body.username} registado com sucesso`});
+                    });
+
+                }
+                else {
+                    reject({ mensagem: 'Ja existe esse utilizador ou email'});
+                }
+        });
+    });
+};
 
 module.exports = sirtp2db;

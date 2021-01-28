@@ -10,27 +10,33 @@
         <input
           class="inputregistar"
           v-model="username"
-          placeholder="Nome de Utilizador..."
+          placeholder="Nome de Utilizador..." required
         /><br /><br />
         <input
           class="inputregistar"
           v-model="password"
           type="password"
-          placeholder="Palavra Chave..."
+          placeholder="Palavra Chave..." required
+        /><br /><br />
+        <input
+          class="inputregistar"
+          v-model="passwordConf"
+          type="password"
+          placeholder="Confirme Palavra Chave..." required
         /><br /><br />
         <input
           class="inputregistar"
           v-model="email"
-          placeholder="Email..."
+          placeholder="Email..." required
         /><br /><br />
         <input
           class="inputregistar"
           v-model="nome"
-          placeholder="Nome..."
+          placeholder="Nome..." required
         /><br /><br />
         <input
           class="btnregistar"
-          v-on:click="check()"
+          v-on:click="handleSubmit()"
           type="submit"
           value="Registar"
         /><br />
@@ -57,53 +63,31 @@ export default {
       users: [],
       username: "",
       password: "",
+      passwordConf: "",
       email: "",
-      nome: "",
-
-      logeduser: "",
-
-      existe: false,
-      logado: false,
+      nome: ""
     };
   },
   mounted() {
-    this.getProducts();
   },
   methods: {
-    getProducts() {
-      axios({
-        method: "get",
-        url: `http://localhost:3000/cliente`,
-      }).then((response) => {
-        this.users = response.data;
-      });
-    },
-    check: function() {
-
-      for (var user of this.users) {
-        if (user.username == this.username) {
-          this.existe = true;
-        } else {
-          this.existe = false;
-        }
-      }
-
-      if (this.existe == false) {
-        axios({
-          method: "post",
-          url: `http://localhost:3000/cliente/insert`,
-          data: {
+    async handleSubmit() {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:3000/cliente/registar`, 
+        data: {
             username: this.username,
             password: this.password,
-            nome: this.nome,
+            passwordConf: this.passwordConf,
             email: this.email,
-          } /*Assim que se passa dados pelo body*/,
-        }).then(() => {
-          this.logeduser = this.username;
-        });
-        this.logado = true;
-      }
-    },
+            nome: this.nome
+          }
+      }).then((response) => {
+        alert(response.data.mensagem);
+        this.$router.push('/login');
+      }).catch(error => window.alert(error.response.data.mensagem));
+        
+    }
   },
 };
 </script>

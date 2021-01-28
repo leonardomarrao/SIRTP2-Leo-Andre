@@ -213,10 +213,10 @@ app.get('/cliente/', async(req, res) => {
 
 });
 
-app.get('/cliente/:id', async(req, res) => {
+app.get('/allClientes/', async(req, res) => {
 
     try {
-        let results = await db.oneCliente(req.params.id);
+        let results = await db.allCliente();
         res.json(results);
     } catch (error) {
         console.log(error);
@@ -225,12 +225,14 @@ app.get('/cliente/:id', async(req, res) => {
 
 });
 
-app.post('/cliente/insert', async(req, res) => {
+app.get('/cliente/:id', async(req, res) => {
+
     try {
-        let results = await db.insertCliente(req.body);
+        let results = await db.oneCliente(req.params.id);
         res.json(results);
     } catch (error) {
-        res.status(401).send(error);
+        console.log(error);
+        res.sendStatus(500);
     }
 
 });
@@ -415,6 +417,18 @@ app.post('/login/', async(req, res) => {
         res.json(results);
     } catch (error) {
 
+        res.status(401).send(error);
+    }
+
+});
+
+//REGISTAR
+
+app.post('/cliente/registar', async(req, res) => {
+    try {
+        let results = await db.registarCliente(req.body);
+        res.json(results);
+    } catch (error) {
         res.status(401).send(error);
     }
 

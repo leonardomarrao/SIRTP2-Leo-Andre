@@ -49,7 +49,7 @@ export default {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', this.username);
         this.$router.push('/');
-      });
+      }).catch(error => window.alert(error.response.data));
         
     }
   }
