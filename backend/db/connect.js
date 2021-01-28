@@ -472,9 +472,6 @@ sirtp2db.allAvaliacaoFromProduto = (idpro) => {
     return new Promise((resolve,reject) => {
         var listaAvaliacoesOriginal = [];
         var listaAvaliacoesNova = [];
-        var nomes = [];
-        var i = 0;
-        var j = 0;
         pool.query(`SELECT * FROM avaliacao WHERE idpro = ?`, [idpro],(err, results) => {
             if(err) {
                 reject(err);
