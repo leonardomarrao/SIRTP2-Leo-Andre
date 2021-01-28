@@ -466,6 +466,66 @@ sirtp2db.insertCompra = (valor, data, idcli, idpro) => {
 
 };
 
+/////////////////////////
+
+sirtp2db.allAvaliacaoFromProduto = (idpro) => {
+    return new Promise((resolve,reject) => {
+        var listaAvaliacoesOriginal = [];
+        var listaAvaliacoesNova = [];
+        var nomes = [];
+        var i = 0;
+        var j = 0;
+        pool.query(`SELECT * FROM avaliacao WHERE idpro = ?`, [idpro],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            else {      
+                listaAvaliacoesOriginal = results;
+                getNomes(results).then((res) => {
+                    
+                    var i = 0;
+                    for(var reg of res) {
+                        listaAvaliacoesNova.push({avaliacao : listaAvaliacoesOriginal[i], username : reg.username})
+                        i = i + 1;
+                    }
+                    resolve(listaAvaliacoesNova);
+                
+                }) 
+            }     
+        });
+    });
+
+    async function getNomes(results) {
+        return await new Promise((resolve,reject) => {
+            var arrayAll = [];
+            for(var cliente of results) {  
+                var promise = new Promise((resolve,reject) => {
+                    pool.query(`SELECT username FROM cliente WHERE id = ?`, [cliente.idcli],(err, res) => {
+                        if(err) {
+                             reject(err);
+                        }else {
+                            resolve(res);
+                        }  
+                    });
+                });
+                arrayAll.push(promise);
+            }
+            var final = [];
+            Promise.all(arrayAll).then((array) => {
+            array.forEach((singleArray) => {
+                singleArray.forEach((produto) => {              
+                    final.push(produto);
+                });
+            });
+                
+            resolve(final);
+            });  
+        });
+    }
+};
+
+/////////////////////////
+
 sirtp2db.allDetailsFromCompra = (idcli) => {
     return new Promise((resolve,reject) => {
         var listaProdutosOriginal = [];
@@ -480,7 +540,6 @@ sirtp2db.allDetailsFromCompra = (idcli) => {
                     // array exists and is not empty
                     getDatas(idcli).then((res) => {
                         datas = res;
-                        console.log(datas);
                     }); 
                 }
                 
@@ -562,6 +621,28 @@ sirtp2db.oneAvaliacao = (id) => {
     });
 };
 
+sirtp2db.insertAvaliacao = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`INSERT INTO avaliacao (idcli, idpro, classificacao, comentario) VALUES (?, ?, ?, ?)`, [body.idcli, body.idpro, body.classificacao, body.comentario],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            resolve({ mensagem: `Avaliação inserida!`});
+        });
+    });
+};
+
+sirtp2db.removeAvaliacao = (body) => {
+    return new Promise((resolve,reject) => {
+        pool.query(`DELETE FROM avaliacao WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            resolve({ mensagem: `Avaliação removida!`});
+        });
+    });
+};
+/*
 sirtp2db.insertOrRemoveAvaliacao = (body) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM avaliacao WHERE idcli = ? AND idpro = ?`, [body.idcli, body.idpro],(err, results) => {
@@ -603,7 +684,7 @@ sirtp2db.insertOrRemoveAvaliacao = (body) => {
         });
     };
 };
-
+*/
 //QUERIES FAVORITO
 
 sirtp2db.allFavorito = () => {
