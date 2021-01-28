@@ -349,6 +349,40 @@ app.get('/avaliacao/:id', async(req, res) => {
 
 });
 
+app.get('/avaliacao/produto/:idpro', async(req, res) => {
+
+    try {
+        let results = await db.allAvaliacaoFromProduto(req.params.idpro);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.post('/avaliacao/insertAvaliacao', async(req, res) => {
+    try {
+        let results = await db.insertAvaliacao(req.body);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
+app.post('/avaliacao/removeAvaliacao', async(req, res) => {
+    try {
+        let results = await db.removeAvaliacao(req.body);
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+/*
 app.post('/avaliacao/insertOrRemoveAva', async(req, res) => {
     try {
         let results = await db.insertOrRemoveAvaliacao(req.body);
@@ -359,7 +393,7 @@ app.post('/avaliacao/insertOrRemoveAva', async(req, res) => {
     }
 
 });
-
+*/
 //APP FAVORITO
 
 app.get('/favorito/', async(req, res) => {
