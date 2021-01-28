@@ -5,9 +5,6 @@
       <Navbar class="bottom"></Navbar>
     </header>
     <body>
-      <div class="cartoes" v-for="produto of lista" :key="produto.id">
-        <CartaProduto v-bind:produto="produto"></CartaProduto>
-      </div>
 
       <div class="caixaFiltro">
         <select v-model="generoEscolhido">
@@ -21,6 +18,11 @@
           >
         </select>
       </div>
+      <div class="cartoes" v-for="produto of lista" :key="produto.id">
+        <CartaProduto v-bind:produto="produto"></CartaProduto>
+      </div>
+
+      
     </body>
   </div>
 </template>

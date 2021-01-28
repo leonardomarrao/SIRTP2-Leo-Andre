@@ -32,15 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="comentario">
-      <form action="/produto/:id" method="post">
-        <label for="comentario">Adicionar comentário:</label>
-        <input type="text" id="comentario" name="comentario" /><br /><br />
-        <label for="nota">Nota de 0 a 10:</label>
-        <input type="text" id="nota" name="nota" /><br /><br />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+    
   </div>
 </template>
 
