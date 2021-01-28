@@ -1,34 +1,45 @@
 <template>
-  <div class="carta" v-if="produto.nome">
-    <div class="container-image">
-      <img class="imagem" :src="dataUrl" />
+  <div class="cartaProdutoSingle">
+    <div class="carta" v-if="produto.nome">
+      <div class="container-image">
+        <img class="imagem" :src="dataUrl" />
+      </div>
+
+      <div class="container-info">
+        <h1 class="titulo">{{ produto.nome }}</h1>
+        <br />
+        <div class="detailsupdesc">
+          <p class="details">Versão: {{ produto.consola }}</p>
+          <p class="details">Genero: {{ produto.genero }}</p>
+          <p class="details">Classificação: {{ produto.classificacao }}/10</p>
+        </div>
+        <br />
+
+        <p class="detailsdesc">Descrição:<br /><br />{{ produto.descricao }}</p>
+        <br />
+
+        <div class="detailsbellowdesc">
+          <p class="detailsprice">Preço: {{ produto.preco }} €</p>
+        </div>
+
+        <div class="btndiv">
+          <button class="btnFav">
+            <img class="favorito" src="../assets/favorito.png" />
+          </button>
+          <button class="btnbuy">
+            <img class="carrinho" src="../assets/carrinho.png" />
+          </button>
+        </div>
+      </div>
     </div>
-
-    <div class="container-info">
-      <h1 class="titulo">{{ produto.nome }}</h1>
-      <br />
-      <div class="detailsupdesc">
-        <p class="details">Versão: {{ produto.consola }}</p>
-        <p class="details">Genero: {{ produto.genero }}</p>
-        <p class="details">Classificação: {{ produto.classificacao }}/10</p>
-      </div>
-      <br />
-
-      <p class="detailsdesc">Descrição:<br /><br />{{ produto.descricao }}</p>
-      <br />
-
-      <div class="detailsbellowdesc">
-        <p class="detailsprice">Preço: {{ produto.preco }} €</p>
-      </div>
-
-      <div class="btndiv">
-        <button class="btnFav">
-          <img class="favorito" src="../assets/favorito.png" />
-        </button>
-        <button class="btnbuy">
-          <img class="carrinho" src="../assets/carrinho.png" />
-        </button>
-      </div>
+    <div class="comentario">
+      <form action="/produto/:id" method="post">
+        <label for="comentario">Adicionar comentário:</label>
+        <input type="text" id="comentario" name="comentario" /><br /><br />
+        <label for="nota">Nota de 0 a 10:</label>
+        <input type="text" id="nota" name="nota" /><br /><br />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   </div>
 </template>
@@ -123,7 +134,6 @@ export default {
 }
 
 .detailsbellowdesc {
-  
   text-decoration: none;
   color: white;
   font-family: Kenyan;
@@ -157,7 +167,6 @@ export default {
 }
 
 .btndiv {
-
   margin-left: 80%;
   display: flex;
   justify-content: space-between;
@@ -182,7 +191,6 @@ export default {
   border: 2px solid black;
 }
 
-
 .carrinho {
   height: 50px;
   width: 55px;
@@ -193,7 +201,6 @@ export default {
   background-color: rgb(17, 122, 40);
   transform: scale(1.2);
 }
-
 
 .btnFav {
   margin-right: 10px;
@@ -216,12 +223,7 @@ export default {
 }
 
 .favorito {
-
   height: 50px;
   width: 55px;
-
 }
-
-
-
 </style>
