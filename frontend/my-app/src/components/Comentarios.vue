@@ -1,8 +1,8 @@
 <template>
   <div class="comentarioDiv">
-    <p>{{ comentario.comentario.nome }}</p>
+    <p id="usernameCom">{{ comentario.username }}</p>
     <div class="caixaComentario">
-      <p>{{ comentario.comentario }}</p>
+      <p id="actualComentario">{{ comentario.avaliacao.comentario }}. Nota dada pelo utilizador:  {{comentario.avaliacao.classificacao}}/10</p>
     </div>
   </div>
 </template>
@@ -20,16 +20,33 @@ export default {
 
 <style>
 .comentarioDiv {
-  font-size: 15px;
+  font-size: 25px;
   font-family: Kenyan;
   width: 200px;
   height: fit-content;
+  color:white;
+  margin-left: 700px;
 }
 .caixaComentario{
-    width: 200px;
+    
+    text-align: left;
+    width: 500px;
     height: fit-content;
     background-color: black;
     border: 2px white;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+#actualComentario {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    color:white;
+    font-size: 18px;
+}
+
+#usernameCom{
+    margin-right: 130px;
 }
 </style>

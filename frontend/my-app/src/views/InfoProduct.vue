@@ -9,8 +9,9 @@
         <CartaProdutoSingle v-bind:produto="produto"/>
         <Comentar v-if="user" />
       </div>
-        <div class="todosComentarios" v-for="comentario of listaComentarios" :key="comentario.id">
-          <Comentarios/>
+        <div class="todosComentarios" v-for="comentario of listaComentarios" :key="comentario.avaliacao.id">
+          <Comentarios v-bind:comentario="comentario"/>
+          <br>
         </div>
       
     
@@ -39,6 +40,7 @@ export default {
       produto: {},
       listaComentarios: {},
       user: localStorage.getItem('user'),
+      idcli: localStorage.getItem('id'),
     }
   },
   mounted() {
@@ -61,14 +63,14 @@ export default {
       console.log(id);
       axios({
         method: "get",
-        url: `http://localhost:3000/avaliacao/` + id,
+        url: `http://localhost:3000/avaliacao/produto/` + id,
       }).then((response) => {
         this.listaComentarios = response.data;
-        console.log("carlos");
-        console.log(this.listaComentarios);
+        
         
       })
     },
+    
     
   }
 

@@ -1,21 +1,20 @@
 <template>
   <div class="comentarios">
     <div class="comentar">
-      <form action="/produto/:id" method="post">
+      <form action="">
         <label for="comentario" class="textoAntesComentar"
-          >Adicionar comentário:</label
-        >
+          >Adicionar comentário:</label>
         <input
           type="text"
-          id="comentario"
-          name="comentario"
+          id="comentarioInserido"
+          name="comentarioInserido"
           class="inputsComentarios"
         /><br /><br />
         <label for="nota" class="textoAntesComentar">Nota de 0 a 10:</label>
         <input
           type="number"
           id="nota"
-          name="nota"
+          v-model="nota"
           class="inputsComentarios"
           min="0"
           max="10"
@@ -23,7 +22,7 @@
         <input
           type="submit"
           id="btnComentar"
-          value="Submit"
+          v-model="comentarioInserido"
           v-on:click="insertComentary()"
           maxlength="500"
         />
@@ -37,9 +36,33 @@ export default {
   name: "Comentar",
   data() {
     return {
-      user: localStorage.getItem('user')
+      user: localStorage.getItem('user'),
+      idcli: localStorage.getItem('id'),
+      nota: '',
+      comentarioInserido: '',
+      idprodPagina: this.$route.params.id
     };
   },
+  methods:{
+    insertCommentary(){
+      var idprod = this.$route.params.id;
+      console.log(id);
+      axios({
+        method: "post",
+        url: `http://localhost:3000/insertAvaliacao`,
+        data:{
+          idcli: this.idcli,
+          idpro: idprod,
+          classificacao: this.nota,
+          comentario: this.comentarioInserido,
+        }
+      }).then((response) => {
+        this.listaComentarios = response.data;
+        console.log(this.listaComentarios);
+        
+      })
+    }
+  }
 };
 </script>
 
@@ -48,7 +71,7 @@ export default {
   font-family: Kenyan;
 }
 
-#comentario {
+#comentarioInserido {
   height: 100px;
   width: 500px;
   font-size: 20px;
