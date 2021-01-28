@@ -16,7 +16,7 @@ import axios from "axios";
 export default {
   name: "Home",
   async created() {
-      console.log(this.user);
+     if(localStorage.getItem('token')) {
       const response = await axios({
         method: "get",
         url: `http://localhost:3000/cliente`, 
@@ -26,7 +26,8 @@ export default {
       })
       console.log(response.data[0].username);
       this.user = response.data[0].username;
-    },
+    }
+  },
   components: {
     Navbar,
     TopNavbar,
@@ -36,7 +37,7 @@ export default {
     return {
       produto: {imagemDestaque: {data: {}}},
       users: [],
-      user: "teste"
+      user: ''
     }
   },
   mounted() {

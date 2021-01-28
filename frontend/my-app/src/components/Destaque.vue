@@ -3,8 +3,10 @@
     <p class="destaqueTexto">Destaque</p>
     <div class="infoDestaque">
       <img :src="dataUrl" class="imgDestaque" />
+      <div class="textDestaque">
       <p class="nomeDestaque">{{ produto.nome }}</p>
       <p class="classificacaoDestaque">{{ produto.classificacao }}/10</p>
+      </div>
     </div>
   </div>
 </template>
@@ -44,10 +46,6 @@ export default {
   font-family: Kenyan;
 }
 
-.infoDestaque {
-  float: left;
-  padding-top: 170px;
-}
 
 .imgDestaque {
   height: 528px;

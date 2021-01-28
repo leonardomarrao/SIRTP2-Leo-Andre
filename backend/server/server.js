@@ -47,10 +47,10 @@ app.get('/produto/display/plataforma/:plataforma', async(req, res) => {
 
 });
 
-app.get('/produto/display/plataforma&genero', async(req, res) => {
+app.get('/produto/display/plataformagenero/:plataforma/:genero', async(req, res) => {
 
     try {
-        let results = await db.displayProdutoPlataformaAndGenero(req.body.plataforma, req.body.genero);
+        let results = await db.displayProdutoPlataformaAndGenero(req.params.plataforma, req.params.genero);
         res.json(results);
     } catch (error) {
         console.log(error);
