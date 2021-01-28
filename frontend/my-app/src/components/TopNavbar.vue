@@ -11,6 +11,7 @@
       <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin">Login</router-link>
       <button v-else v-on:click="clearStorage()">Logout</button>
       
+      <router-link v-if="user" :to="{path: '/infoUser'}" tag="div" class="btnLogin">Perfil</router-link>
     </div>
      
   </nav>
