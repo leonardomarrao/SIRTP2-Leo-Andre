@@ -1,7 +1,7 @@
 <template>
   <div class="comentarios">
     <div class="comentar">
-      <form action="">
+      <form action="/produto/"> 
         <label for="comentario" class="textoAntesComentar"
           >Adicionar comentário:</label>
         <input
@@ -23,7 +23,7 @@
           type="submit"
           id="btnComentar"
           v-model="comentarioInserido"
-          v-on:click="insertComentary()"
+          v-on:click="insertCommentary()"
           maxlength="500"
         />
       </form>
