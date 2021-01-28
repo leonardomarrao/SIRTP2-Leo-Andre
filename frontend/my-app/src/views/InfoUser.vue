@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       cliente: {},
+      user: localStorage.getItem('user')
     }
   },
   mounted() {
@@ -46,15 +47,13 @@ export default {
   },
   methods: {
     getClients() {
-      var id = this.$route.params.id;
-      var idcli = 2;
-      
+      console.log("Nome: "+this.user);
       axios({
         method: "get",
-        url: `http://localhost:3000/cliente/` + idcli,
+        url: `http://localhost:3000/cliente/` + this.user,
       }).then((response) => {
-        this.cliente = response.data;
-        console.log(this.cliente);
+        this.cliente = response.data[0];
+        console.log("CLIENTE: "+this.cliente);
         
       })
     }

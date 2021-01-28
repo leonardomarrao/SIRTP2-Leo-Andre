@@ -6,7 +6,7 @@
     </header>
     <body>
       <br />
-      <div class="centrar" v-for="produto of compra" :key="produto.id">
+      <div class="centrar" v-for="produto of listaCompras" :key="produto.id">
         <CompraBarra v-bind:produto="produto"></CompraBarra>
       </div>
       <br />
@@ -29,8 +29,8 @@ export default {
   },
   data() {
     return {
-      compra: [],
       listaCompras: [],
+      id: localStorage.getItem('id')
     };
   },
   mounted() {
@@ -38,21 +38,11 @@ export default {
   },
   methods: {
     getHistory() {
-      var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      var idcli = 1;
       axios({
         method: "get",
-        url: `http://localhost:3000/compra/cliente/` + idcli,
+        url: `http://localhost:3000/compraDetailsFromCliente/` + this.id,
       }).then((response) => {
         this.listaCompras = response.data;
-        var indice = this.listaCompras.length;
-
-        while (indice != 0) {
-          this.compra.push(this.listaCompras[indice - 1][0]);
-          indice = indice - 1;
-        }
-        
-        console.log("esse " + this.compra + "carlos");
       });
     },
   },

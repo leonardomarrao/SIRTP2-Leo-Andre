@@ -24,7 +24,9 @@ export default {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       })
+      localStorage.setItem('id', response.data[0].id);
       console.log(response.data[0].username);
+      console.log("ID: "+localStorage.getItem('id'));
       this.user = response.data[0].username;
     }
   },

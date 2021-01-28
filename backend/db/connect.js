@@ -345,13 +345,13 @@ sirtp2db.allCliente = () => {
     });
 };
 
-sirtp2db.oneCliente = (id) => {
+sirtp2db.oneCliente = (username) => {
     return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente WHERE id = ?`, [id],(err, results) => {
+        pool.query(`SELECT * FROM cliente WHERE username = ?`, [username],(err, results) => {
             if(err) {
-                return reject(err);
+                reject(err);
             }
-            return resolve(results[0]);
+            resolve(results[0]);
         });
     });
 };

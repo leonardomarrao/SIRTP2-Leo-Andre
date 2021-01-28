@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       favorito: [],
+      id: localStorage.getItem('id')
     };
   },
   mounted() {
@@ -37,11 +38,9 @@ export default {
   },
   methods: {
     getFavorits() {
-      var id = this.$route.params.id; //precisamos passar aqui o id do cliente
-      var idcli = 2;
       axios({
         method: "get",
-        url: `http://localhost:3000/favorito/cliente/` + idcli,
+        url: `http://localhost:3000/favorito/cliente/` + this.id,
       }).then((response) => {
         this.favorito = response.data;
         console.log(this.favorito);

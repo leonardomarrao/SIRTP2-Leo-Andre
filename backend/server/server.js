@@ -225,10 +225,10 @@ app.get('/allClientes/', async(req, res) => {
 
 });
 
-app.get('/cliente/:id', async(req, res) => {
+app.get('/cliente/:username', async(req, res) => {
 
     try {
-        let results = await db.oneCliente(req.params.id);
+        let results = await db.oneCliente(req.params.username);
         res.json(results);
     } catch (error) {
         console.log(error);

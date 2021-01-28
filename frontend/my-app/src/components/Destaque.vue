@@ -26,7 +26,6 @@ export default {
   },
   computed: {
     dataUrl() {
-      console.log(this.produto);
       return (
         "data:image/jpeg;base64," +
         btoa(

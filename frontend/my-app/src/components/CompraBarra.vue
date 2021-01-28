@@ -2,10 +2,10 @@
   <div class="linhaCompra">
 
     <div class="containerCompra">
-      <router-link :to="{ path: '/produto/' + produto.id }" tag="div">
-        <p class="infoCompra" id="nomeCompra">{{ produto.id }}</p>
+      <router-link :to="{ path: '/produto/' + produto.produto.id }" tag="div">
+        <p class="infoCompra" id="nomeCompra">{{ produto.produto.nome }}</p>
       </router-link>
-
+      <p class="infoCompra" id="nomeCompra">{{ produto.data }}</p>
     </div>
   </div>
 </template>

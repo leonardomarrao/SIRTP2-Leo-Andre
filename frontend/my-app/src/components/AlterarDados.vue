@@ -14,7 +14,15 @@
 
 <script>
 export default {
-    
+    name: "Login",
+    data() {
+    return {
+      users: [],
+      password: "",
+      email: "",
+      nome: ""
+    };
+  },
 }
 </script>
 

@@ -2,16 +2,11 @@
   <nav>
     <router-link :to="{path: '/'}" tag="div" class="btnhome"><img class="topN" src="../assets/logo.png" /></router-link>
     <div class="container">
-     <!-- <input
-        class="pesquisa"
-        type="text"
-        v-model="search"
-        placeholder="pesquisa..."
-      /> -->
       <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin">Login</router-link>
       <button v-else v-on:click="clearStorage()">Logout</button>
       
-      <router-link v-if="user" :to="{path: '/infoUser'}" tag="div" class="btnLogin">Perfil</router-link>
+      <router-link v-if="user && user != 'admin'" :to="{path: '/infouser'}" tag="div" class="btnLogin">Perfil</router-link>
+      <router-link v-if="user && user == 'admin'" :to="{path: '/admArea'}" tag="div" class="btnLogin">Perfil</router-link>
     </div>
      
   </nav>
