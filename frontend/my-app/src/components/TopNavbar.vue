@@ -2,7 +2,7 @@
   <nav>
     <router-link :to="{path: '/'}" tag="div" class="btnhome"><img class="topN" src="../assets/logo.png" /></router-link>
     <div class="container">
-      <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin"></router-link>
+      <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin"><img src="../assets/login.png" class="imgLogin"/></router-link>
       <button v-else v-on:click="clearStorage()" class="btnLogout"><img src="../assets/logout.png" class="imgLogout"/></button>
       
       <router-link v-if="user && user != 'admin'" :to="{path: '/infouser'}" tag="div" class="btnLogin"><img src="../assets/perfil.png" class="imgPerfil"/></router-link>
