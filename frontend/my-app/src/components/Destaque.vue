@@ -1,4 +1,5 @@
 <template>
+<router-link :to="{path: '/produto/' + this.produto.id}" tag="div">
   <div class="destaque">
     <p class="destaqueTexto">Destaque</p>
     <div class="infoDestaque">
@@ -9,6 +10,7 @@
       </div>
     </div>
   </div>
+  </router-link>
 </template>
 
 <script>
@@ -43,15 +45,18 @@ export default {
 <style>
 .Destaque {
   font-family: Kenyan;
+  
 }
 
 
 .imgDestaque {
-  height: 528px;
-  width: 1024px;
+  height: 628px;
+  width: 1124px;
   position: absolute;
-  left: 350px;
-  bottom: 135px;
+  right: 450px;
+  top: 300px;
+  border-radius: 100px;
+  cursor: pointer;
 }
 .destaqueTexto {
   color: black;
@@ -68,18 +73,19 @@ export default {
   font-family: Kenyan;
   color: black;
   position: absolute;
-  bottom: 220px;
+  bottom: 160px;
   left: 400px;
   font-size: 50px;
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
     1px 1px 0 #ffffff;
+    cursor: pointer;
 }
 
 .classificacaoDestaque {
   font-family: Kenyan;
   color: black;
   position: absolute;
-  bottom: 160px;
+  bottom: 100px;
   left: 450px;
   font-size: 50px;
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
