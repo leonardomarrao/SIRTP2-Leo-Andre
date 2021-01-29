@@ -57,6 +57,7 @@ export default {
   top: 300px;
   border-radius: 100px;
   cursor: pointer;
+  border: 100px white;
 }
 .destaqueTexto {
   color: black;
@@ -73,7 +74,7 @@ export default {
   font-family: Kenyan;
   color: black;
   position: absolute;
-  bottom: 160px;
+  bottom: 120px;
   left: 400px;
   font-size: 50px;
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
@@ -85,7 +86,7 @@ export default {
   font-family: Kenyan;
   color: black;
   position: absolute;
-  bottom: 100px;
+  bottom: 60px;
   left: 450px;
   font-size: 50px;
   text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff,
