@@ -1,12 +1,12 @@
 <template>
-  <nav>
+  <nav class="allTopNav">
     <router-link :to="{path: '/'}" tag="div" class="btnhome"><img class="topN" src="../assets/logo.png" /></router-link>
     <div class="container">
       <router-link v-if="!user"  :to="{path: '/login'}" tag="div" class="btnLogin"><img src="../assets/login.png" class="imgLogin"/></router-link>
       <button v-else v-on:click="clearStorage()" class="btnLogout"><img src="../assets/logout.png" class="imgLogout"/></button>
       
       <router-link v-if="user && user != 'admin'" :to="{path: '/infouser'}" tag="div" class="btnLogin"><img src="../assets/perfil.png" class="imgPerfil"/></router-link>
-      <router-link v-if="user && user == 'admin'" :to="{path: '/admArea'}" tag="div" class="btnLogin">Produtos</router-link>
+      <router-link v-if="user && user == 'admin'" :to="{path: '/admArea'}" tag="div" class="btnLogin"><img src="../assets/admArea.png" class="imgPerfil"/></router-link>
     </div>
      
   </nav>
@@ -32,13 +32,10 @@ export default {
 
 <style>
 
-
 .topN{
-
   padding: 10px;
   width: 200px;
   height: 60px;
-
 }
 
 .imagem {
@@ -66,12 +63,18 @@ export default {
   width: 50px;
   cursor: pointer;
   float: right;
-  
 }
 
 .btnLogout{
   background-color: rgb(82, 82, 82);
   float:left;
+  border-color: transparent;
+}
+
+.btnLogin{
+  background-color: rgb(82, 82, 82);
+  float:left;
+  margin-left: 10px;
 }
 
 /*.pesquisa {
@@ -90,16 +93,5 @@ export default {
   border: none !important;
 }
 
-.login {
-
-  cursor:pointer;
-  background:transparent;
-  border: none !important;
-  width: 60px;
-  height: 60px;
-  
-  
-
-}
 </style>
 
