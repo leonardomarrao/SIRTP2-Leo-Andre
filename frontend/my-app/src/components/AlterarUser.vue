@@ -5,7 +5,7 @@
            <form action="/Home" method="get">
         <input class="alterarPass" v-model="password" type="password" placeholder="Alterar palavra chave..."/>
         <input class="alterarEmail" v-model="email" placeholder="Alterar Email..."/>
-        <input class="alterarNome" v-model="nome" placeholder="AlterarNome..."/>
+        <input class="alterarNome" v-model="nome" placeholder="Alterar Nome..."/>
         <input class="btnregistar" type="submit" value="Alterar Dados"/><br />
            </form>
        </div>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: "Login",
+    name: "AlterarUser",
     data() {
     return {
       users: [],

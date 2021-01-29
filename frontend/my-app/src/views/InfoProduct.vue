@@ -9,6 +9,8 @@
         <CartaProdutoSingle v-bind:produto="produto"/>
         <Comentar v-if="user" />
       </div>
+      <br>
+        <h1>Comentarios</h1>
         <div class="todosComentarios" v-for="comentario of listaComentarios" :key="comentario.avaliacao.id">
           <Comentarios v-bind:comentario="comentario"/>
           <br>
@@ -60,7 +62,6 @@ export default {
     },
     getComentaries() {
       var id = this.$route.params.id;
-      console.log(id);
       axios({
         method: "get",
         url: `http://localhost:3000/avaliacao/produto/` + id,

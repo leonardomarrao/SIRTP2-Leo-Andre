@@ -225,6 +225,18 @@ app.get('/allClientes/', async(req, res) => {
 
 });
 
+app.get('/allEmails/', async(req, res) => {
+
+    try {
+        let results = await db.allEmails();
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 app.get('/cliente/:username', async(req, res) => {
 
     try {
@@ -237,9 +249,9 @@ app.get('/cliente/:username', async(req, res) => {
 
 });
 
-app.put('/cliente/:id/updateDados', async(req, res) => {
+app.put('/cliente/updateDados/:username', async(req, res) => {
     try {
-        let results = await db.updateDadosCliente(req.body.password, req.body.nome, req.body.email, req.params.id);
+        let results = await db.updateDadosCliente(req.body, req.params.username);
         res.json(results);
     } catch (error) {
         console.log(error);

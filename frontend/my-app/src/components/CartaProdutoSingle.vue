@@ -21,14 +21,15 @@
         <div class="detailsbellowdesc">
           <p class="detailsprice">Preço: {{ produto.preco }} €</p>
         </div>
-
         <div class="btndiv">
-          <button class="btnFav">
+          <router-link v-if="user && user == 'admin'" :to="{path: '/alterarDadosProduto/' + produto.id}" tag="button" class="btnEdit">Editar</router-link>
+          <button class="btnFav" v-on:click="inserirOuRemoverFavorito()">
             <img class="favorito" src="../assets/favorito.png" />
           </button>
-          <button class="btnbuy">
+          <button class="btnbuy" v-on:click="comprarProduto()">
             <img class="carrinho" src="../assets/carrinho.png" />
           </button>
+
         </div>
       </div>
     </div>
@@ -37,10 +38,14 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: function() {
     return {
       url: "",
+      user: localStorage.getItem('user'),
+      idcli: localStorage.getItem('id'),
+      idpro: this.$route.params.id
     };
   },
   props: {
@@ -61,6 +66,57 @@ export default {
       );
     },
   },
+  mouted() {
+    checkFavorito()
+  },
+  methods: {
+    inserirOuRemoverFavorito() {
+      if(localStorage.getItem('user')) {
+        if(localStorage.getItem('user') != "admin") {
+          axios({
+            method: "post",
+            url: `http://localhost:3000/favorito/insertOrRemoveFav`,
+            data:{
+              idcli: this.idcli,
+              idpro: this.idpro
+            }
+          }).then((response) => {
+            window.alert(response.data.mensagem);
+            window.location.reload();
+          })
+        } else {
+          window.alert("Admin, qual é a necessidade disto? Para de gastar o meu tempo!");
+        }
+      } else {
+        this.$router.push('/login');
+      }
+    },
+    comprarProduto() {
+      if(localStorage.getItem('user')) {
+        if(localStorage.getItem('user') != "admin") {
+          const current = new Date();
+          const date = current.getFullYear()+'-'+(current.getMonth()+1)+'-'+current.getDate();
+          axios({
+            method: "post",
+            url: `http://localhost:3000/compra/insert`,
+            data:{
+              idcli: this.idcli,
+              idpro: this.idpro,
+              valor: this.produto.preco,
+              data: date
+
+            }
+          }).then((response) => {
+            window.alert(response.data.mensagem);
+          })
+        } else {
+          window.alert("Admin, não compres os teus proprios produtos!");
+        }
+      } else {
+        this.$router.push('/login');
+      }
+    }   
+  }
 };
 </script>
 
@@ -211,6 +267,26 @@ export default {
 
 .btnFav:hover {
   background-color: rgb(204, 12, 12);
+  transform: scale(1.2);
+}
+
+.btnEdit {
+  margin-right: 10px;
+  height: fit-content;
+  width: fit-content;
+  cursor: pointer;
+  padding: 1px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-left: 0;
+  font-family: Kenyan;
+  font-size: 22px;
+  color: black;
+  border: 2px solid black;
+}
+
+.btnEdit:hover {
+  background-color: rgb(21, 54, 199);
   transform: scale(1.2);
 }
 

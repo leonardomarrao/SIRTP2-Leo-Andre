@@ -6,12 +6,8 @@
     <p class="emailInfo">Email: {{ cliente.email }}</p>
     <p class="usernameInfo">Username: {{ cliente.username }}</p>
     <br />
-      <input
-        class="btnlogin"
-        v-on:click="alterarDados()"
-        type="submit"
-        value="Alterar dados"
-      /><br />
+    <router-link :to="{path: '/alterarDadosUser'}" tag="button" class="btnlogin">Alterar Dados</router-link>
+      
   </div>
 </template>
 

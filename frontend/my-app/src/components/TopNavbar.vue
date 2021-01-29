@@ -6,7 +6,7 @@
       <button v-else v-on:click="clearStorage()">Logout</button>
       
       <router-link v-if="user && user != 'admin'" :to="{path: '/infouser'}" tag="div" class="btnLogin">Perfil</router-link>
-      <router-link v-if="user && user == 'admin'" :to="{path: '/admArea'}" tag="div" class="btnLogin">Perfil</router-link>
+      <router-link v-if="user && user == 'admin'" :to="{path: '/admArea'}" tag="div" class="btnLogin">Produtos</router-link>
     </div>
      
   </nav>

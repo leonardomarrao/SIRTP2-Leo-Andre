@@ -336,7 +336,18 @@ sirtp2db.cliente = (req,res) => {
 
 sirtp2db.allCliente = () => {   
     return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM cliente WHERE username = ?`, [user.username],(err, results) => {
+        pool.query(`SELECT * FROM cliente`,(err, results) => {
+            if(err) {
+                reject(err);
+            }
+            resolve(results);
+        });
+    });
+};
+
+sirtp2db.allEmails = () => {   
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT email FROM cliente`,(err, results) => {
             if(err) {
                 reject(err);
             }
@@ -356,45 +367,42 @@ sirtp2db.oneCliente = (username) => {
     });
 };
 
-sirtp2db.updateDadosCliente = (password, nome, email, id) => {
+sirtp2db.updateDadosCliente = (body, username) => {
     return new Promise((resolve,reject) => {
         var nomeAtual = "";
         var emailAtual = "";
         var passwordAtual = "";
-        var idAtual = "";
-        pool.query(`SELECT * FROM cliente WHERE id = ?`, [id],(err, results) => {
+        var usernameAtual = "";
+        pool.query(`SELECT * FROM cliente WHERE username = ?`, [username],(err, results) => {
             if(err) {
                 reject(err);
             }
             else {
-                if(nome != null && nome != '' && email != null && email != '' && password != null && password != '') {
-                    reject("Nao foram passados parametros para atualizar");
-                }
+                
                 nomeAtual = results[0].nome;
                 emailAtual = results[0].email;
                 passwordAtual = results[0].password;
-                idAtual = id;
+                usernameAtual = username;
 
-                if(nome != null && nome != '') {
-                    nomeAtual = nome;
+                if(body.nome != null && body.nome != '') {
+                    nomeAtual = body.nome;
                 }
-                if(email != null && email != '') {
-                    emailAtual = email;
+                if(body.email != null && body.email != '') {
+                    emailAtual = body.email;
                 }
-                if(password != null && password != '') {
-                    passwordAtual = password;
+                if(body.password != null && body.password != '') {
+                    passwordAtual = body.password;
                 }
-
-                updateDados(nomeAtual, emailAtual, passwordAtual, idAtual).then((res) => {
+                updateDados(nomeAtual, emailAtual, passwordAtual, usernameAtual).then((res) => {
                     resolve("Dados Atualizados Com Sucesso");
                 }); 
             }
         });
     });
 
-    async function updateDados(nomeAtual, emailAtual, passwordAtual, idAtual) {
+    async function updateDados(nomeAtual, emailAtual, passwordAtual, usernameAtual) {
         return await new Promise((resolve,reject) => {
-            pool.query(`UPDATE cliente SET password = ?, nome = ?, email = ? WHERE id = ?`, [passwordAtual, nomeAtual, emailAtual, idAtual],(err, results) => {
+            pool.query(`UPDATE cliente SET password = ?, nome = ?, email = ? WHERE username = ?`, [passwordAtual, nomeAtual, emailAtual, usernameAtual],(err, results) => {
                 if(err) {
                     reject(err);
                 }
@@ -458,11 +466,26 @@ sirtp2db.insertCompra = (valor, data, idcli, idpro) => {
     return new Promise((resolve,reject) => {
         pool.query(`INSERT INTO compra (valor, data, idcli, idpro) VALUES (?, ?, ?, ?)`, [valor, data, idcli, idpro],(err, results) => {
             if(err) {
-                return reject(err);
+                reject(err);
             }
-            return resolve(results[0]);
+            else {
+                getEmail(idcli).then((res) => {
+                    resolve({mensagem: `Compra efetuada! Recibo enviado para ${res.email}.`}); 
+                }) 
+            }
         });
     });
+
+    async function getEmail(idcli) {
+        return await new Promise((resolve,reject) => {
+            pool.query(`SELECT email FROM cliente WHERE id = ?`, [idcli],(err, results) => {
+                if(err) {
+                    reject(err);
+                }
+                resolve(results[0]);
+            });
+        });
+    }
 
 };
 
@@ -758,12 +781,12 @@ sirtp2db.insertOrRemoveFavorito = (body) => {
             }
             if(results.length < 1) {   
                 create(body).then((res) => {
-                    resolve("Favorito Inserido"); 
+                    resolve({mensagem: "Favorito Inserido"}); 
                 })                                    
             } 
             else{
                 destroy(body).then((res) => {
-                    resolve("Favorito Removido"); 
+                    resolve({mensagem: "Favorito Removido"}); 
                 })
             }
         });

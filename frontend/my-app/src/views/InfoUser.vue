@@ -7,15 +7,7 @@
     <body>
       <br />
       <div>
-        <InfoUtilizador v-bind:cliente="cliente"/>
-        <AlterarDados></AlterarDados>
-        <br>
-        <input
-          class="btnregistar"
-          v-on:click="alterarDados()"
-          type="submit"
-          value="Registar"
-        />
+        <InfoUtilizador v-bind:cliente="cliente"/>  
       </div>
     </body>
   </div>
@@ -26,15 +18,13 @@
 import TopNavbar from "../components/TopNavbar.vue";
 import NavbarUtilizador from "../components/NavbarUtilizador.vue";
 import InfoUtilizador from "../components/InfoUtilizador.vue";
-import AlterarDados from "../components/AlterarDados.vue";
 import axios from "axios";
 export default {
   name: "InfoUser",
   components: {
     TopNavbar,
     NavbarUtilizador,
-    InfoUtilizador,
-    AlterarDados,
+    InfoUtilizador
   },
   data() {
     return {
