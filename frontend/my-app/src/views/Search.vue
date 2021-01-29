@@ -4,12 +4,23 @@
       <TopNavbar class="top"></TopNavbar>
       <Navbar class="bottom"></Navbar>
     </header>
-    <body>
 
-      <div class="caixaFiltro">
-        <select v-model="generoEscolhido">
+    <body>
+      <br />
+      <div class="filtroCategorias">
+        <div class="botoesCategorias">
+          <button class="botaoCategoria" @click="categoria = 'consola'">Consola</button>
+          <button class="botaoCategoria" @click="categoria = 'jogo'">Jogo</button>
+          <button class="botaoCategoria" @click="categoria = 'acessorio'">Acessorio</button>
+        </div>
+      </div>
+      <br />
+      <div v-if="categoria=='jogo'"    class="caixaFiltro">
+        <select v-model="generoEscolhido" class="filtroGenero">
           <option disabled value="">Genero</option>
-          <option v-on:click="getProducts()">Todos</option>
+          <option v-on:click="getProducts()" style="font-family: Kenyan"
+            >Todos</option
+          >
           <option
             v-for="produto of listaGeneros"
             :key="produto.id"
@@ -21,8 +32,6 @@
       <div class="cartoes" v-for="produto of lista" :key="produto.id">
         <CartaProduto v-bind:produto="produto"></CartaProduto>
       </div>
-
-      
     </body>
   </div>
 </template>
@@ -44,10 +53,11 @@ export default {
   data() {
     console.log("CHECK SEARCH");
     return {
+      categoria: '',
       lista: [],
       listaGeneros: [],
       listaGenerosPlataforma: [],
-      plataforma: this.$route.params.plataforma, 
+      plataforma: this.$route.params.plataforma,
       Storedplataforma: this.$store.getters.getPlataforma,
       generoEscolhido: "",
     };
@@ -81,7 +91,7 @@ export default {
     getProductsFromGenderAndPlataform() {
       axios({
         method: "get",
-        url: `http://localhost:3000/produto/display/plataformagenero/${this.plataforma}/${this.generoEscolhido}` ,
+        url: `http://localhost:3000/produto/display/plataformagenero/${this.plataforma}/${this.generoEscolhido}`,
       }).then((response) => {
         this.lista = response.data;
       });
@@ -101,8 +111,50 @@ export default {
   float: left;
 }
 
-body {
-  font-family: "montserrat", sans-serif;
+.filtroGenero {
+  font-family: Kenyan;
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+option {
+  font-family: Kenyan;
+  border-color: transparent;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.filtroCategorias {
+  align-items: center;
+  height: 70px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(31, 29, 29, 0.863);
+}
+
+.botaoCategoria {
+  margin-top: 5px;
+  height: 60px;
+  width: 90px;
+  font-family: Kenyan;
+  font-size: 25px;
+  background-color: white;
+  color: black;
+  border-color: transparent;
+}
+
+.botaoCategoria:active {
+  background-color:black;
+  color: white;
+}
+
+.botaoCategoria:focus{
+  background-color:black;
+  color: white;
 }
 
 .bottom {

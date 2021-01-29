@@ -1,10 +1,12 @@
 <template>
+
   <div class="comentarioDiv">
     <p id="usernameCom">{{ comentario.username }}</p>
     <div class="caixaComentario">
       <p id="actualComentario">{{ comentario.avaliacao.comentario }}. Nota dada pelo utilizador:  {{comentario.avaliacao.classificacao}}/10</p>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -19,6 +21,8 @@ export default {
 </script>
 
 <style>
+
+
 .comentarioDiv {
   font-size: 25px;
   font-family: Kenyan;
@@ -32,7 +36,7 @@ export default {
     text-align: left;
     width: 500px;
     height: fit-content;
-    background-color: black;
+    background-color: rgb(31, 30, 30);
     border: 2px white;
     border-radius: 5px;
 }
@@ -48,5 +52,7 @@ export default {
 
 #usernameCom{
     margin-right: 130px;
+    font-size: 20px;
 }
+
 </style>
