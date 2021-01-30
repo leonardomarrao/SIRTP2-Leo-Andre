@@ -95,10 +95,10 @@ app.get('/produto/display/consola/:consola', async(req, res) => {
 
 });
 
-app.get('/produto/display/categoria/:categoria', async(req, res) => {
+app.get('/produto/display/plataformacategoria/:plataforma/:categoria', async(req, res) => {
 
     try {
-        let results = await db.displayProdutoCategoria(req.params.categoria);
+        let results = await db.displayProdutoCategoriaAndPlataforma(req.params.plataforma, req.params.categoria);
         res.json(results);
     } catch (error) {
         console.log(error);

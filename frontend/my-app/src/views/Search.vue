@@ -9,9 +9,10 @@
       <br />
       <div class="filtroCategorias">
         <div class="botoesCategorias">
-          <button class="botaoCategoria" @click="categoria = 'consola'">Consola</button>
-          <button class="botaoCategoria" @click="categoria = 'jogo'">Jogo</button>
-          <button class="botaoCategoria" @click="categoria = 'acessorio'">Acessorio</button>
+          <button class="botaoCategoria" @click="categoria = ''" v-on:click="getProducts()">Todos</button>
+          <button class="botaoCategoria" @click="categoria = 'consola'" v-on:click="getProductsFromPlataformaAndCategoria()">Consola</button>
+          <button class="botaoCategoria" @click="categoria = 'jogo'" v-on:click="getProductsFromPlataformaAndCategoria()">Jogo</button>
+          <button class="botaoCategoria" @click="categoria = 'acessorio'" v-on:click="getProductsFromPlataformaAndCategoria()">Acessorio</button>
         </div>
       </div>
       <br />
@@ -51,7 +52,6 @@ export default {
     CartaProduto,
   },
   data() {
-    console.log("CHECK SEARCH");
     return {
       categoria: '',
       lista: [],
@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    this.getProducts(); //TENTAR CORRER ESTE METODO AO CLICAR NOS OUTROS ROUTERS, ESTA APENAS A CHAMAR A PRIMEIRA VEZ
+    this.getProducts();
     this.getGender();
   },
   methods: {
@@ -96,6 +96,15 @@ export default {
         this.lista = response.data;
       });
     },
+    getProductsFromPlataformaAndCategoria() {
+      axios({
+        method: "get",
+        url: `http://localhost:3000/produto/display/plataformacategoria/${this.plataforma}/${this.categoria}`,
+      }).then((response) => {
+        this.lista = response.data;
+        console.log(this.lista.length);
+      });
+    },
   },
 };
 </script>
@@ -109,6 +118,7 @@ export default {
 
 .cartoes {
   float: left;
+  margin-left: 50px;
 }
 
 .filtroGenero {
@@ -130,7 +140,7 @@ option {
 .filtroCategorias {
   align-items: center;
   height: 70px;
-  width: 300px;
+  width: 400px;
   margin-left: auto;
   margin-right: auto;
   background-color: rgba(31, 29, 29, 0.863);

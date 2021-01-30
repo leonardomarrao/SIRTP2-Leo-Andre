@@ -131,9 +131,9 @@ sirtp2db.displayGeneros = () => {
     });
 };
 
-sirtp2db.displayProdutoCategoria = (categoria) => {
+sirtp2db.displayProdutoCategoriaAndPlataforma = (plataforma, categoria) => {
     return new Promise((resolve,reject) => {
-        pool.query(`SELECT * FROM produto WHERE categoria = ? AND stock <> 0 AND ativo <> 0`, [categoria],(err, results) => {
+        pool.query(`SELECT * FROM produto WHERE plataforma = ? AND categoria = ? AND stock <> 0 AND ativo <> 0`, [plataforma, categoria],(err, results) => {
             if(err) {
                 return reject(err);
             }
