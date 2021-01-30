@@ -99,7 +99,7 @@ export default {
 
   border-radius: 5px;
   margin-top: 10px;
-
+  margin-left: 500px;
   transform: translate(-50%);
   cursor: pointer;
   background-color: rgb(48, 48, 48);

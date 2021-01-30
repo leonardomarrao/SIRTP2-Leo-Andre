@@ -10,7 +10,7 @@
         <Comentar v-if="user" />
       </div>
       <br>
-        <h1>Comentarios</h1>
+        <p>Comentários</p>
         <div class="todosComentarios" v-for="comentario of listaComentarios" :key="comentario.avaliacao.id">
           <Comentarios v-bind:comentario="comentario"/>
           <br>
@@ -80,6 +80,20 @@ export default {
 </script>
 
 <style>
+
+.todosComentarios{
+  background-color: black;
+  height: fit-content;
+  width: fit-content;
+  margin: auto;
+}
+
+p{
+font-family: Kenyan;
+font-size: 60px;
+color: white;
+padding: 10px;
+}
   .centrar {
     margin: auto;
     width: 80%;
