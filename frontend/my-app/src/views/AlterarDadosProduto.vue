@@ -77,6 +77,20 @@
         <button class="btnAlterarDadosProduto" v-on:click="alterarDados()">Alterar Dados</button>
         <router-link :to="{path: '/admArea'}" tag="button" class="btnAlterarDadosProduto">Voltar</router-link>
     </div>
+
+    <div>
+        <div id="app">
+            <div v-if="!image">
+                <h2>Select an image</h2>
+                <input type="file" @change="onFileChange">
+            </div>
+            <div v-else>
+                <img :src="image" />
+                <button @click="removeImage">Remove image</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 </template>
 
@@ -102,6 +116,7 @@ export default {
       descricao: "",
       imagem: "",
       imagemDestaque: "",
+      image: '',
     };
   },
   mounted() {
@@ -109,6 +124,27 @@ export default {
     this.getNomes();
   },
   methods: {
+      // https://codepen.io/Atinux/pen/qOvawK/
+      // encodedImage := base64.StdEncoding.EncodeToString(imageFile)
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      var image = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        vm.image = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (e) {
+      this.image = '';
+    },
     getProducts() {    
       axios({
         method: "get",
