@@ -4,6 +4,7 @@
         <TopNavbar class="top"></TopNavbar>
         </header>
         <h1 class="h1AdminProdutos">PRODUTOS</h1>
+        <router-link :to="{path: '/inserirProduto'}" tag="button" class="insertProduto">Inserir Produto</router-link>
         <body>
             <br />
             <div class="centrar" v-for="produto of lista" :key="produto.id">
@@ -48,7 +49,25 @@ export default {
 </script>
 
 <style>
-    .h1AdminProdutos {
-        font-size: 40px;
-    }
+  .h1AdminProdutos {
+    margin-top: 20px;
+    font-size: 40px;
+    color: white;
+  }
+
+  .insertProduto {
+        width:15%;
+        font-size: 25px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-radius: 5px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-left: 15px;
+        margin-right: 15px;
+        cursor: pointer;
+        background-color: rgb(48, 48, 48);
+        color: white;
+  }
+
 </style>

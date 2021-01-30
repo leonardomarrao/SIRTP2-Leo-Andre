@@ -61,7 +61,7 @@ export default {
 .imgAdminProduto {
   float: left;
   height: 145px;
-  border-radius: 15px;
+  width: 100px;
   padding-top: 20px;
   cursor: pointer;
   margin-left: 50px;

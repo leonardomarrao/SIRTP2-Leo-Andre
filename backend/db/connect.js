@@ -65,6 +65,17 @@ sirtp2db.displayProdutoAvailable = () => {
     });
 };
 
+sirtp2db.getProdutoNomes = () => {
+    return new Promise((resolve,reject) => {
+        pool.query(`SELECT nome FROM produto`,(err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 sirtp2db.displayProdutoPlataforma = (plataforma) => {
     return new Promise((resolve,reject) => {
         pool.query(`SELECT * FROM produto WHERE plataforma = ? AND stock <> 0 AND ativo <> 0`, [plataforma],(err, results) => {
@@ -164,7 +175,7 @@ sirtp2db.oneProduto = (id) => {
     });
 };
 
-sirtp2db.updateDadosProduto = (body) => {
+sirtp2db.updateDadosProduto = (body, id) => {
     return new Promise((resolve,reject) => {
         var nomeAtual = "";
         var categoriaAtual = "";
@@ -177,9 +188,10 @@ sirtp2db.updateDadosProduto = (body) => {
         var generoAtual = "";
         var ativoAtual = "";
         var imagemAtual = "";
+        var imagemAtualDest = "";
         var idAtual = "";
 
-        pool.query(`SELECT * FROM produto WHERE id = ?`, [body.id],(err, results) => {
+        pool.query(`SELECT * FROM produto WHERE id = ?`, [id],(err, results) => {
             if(err) {
                 reject(err);
             }
@@ -194,7 +206,8 @@ sirtp2db.updateDadosProduto = (body) => {
                     && body.classificacao != null && body.classificacao != '' 
                     && body.genero != null && body.genero != '' 
                     && body.ativo != null && body.ativo != '' 
-                    && body.imagem != null && body.imagem != '') {
+                    && body.imagem != null && body.imagem != ''
+                    && body.imagemDestaque != null && body.imagemDestaque != '') {
                     reject("Nao foram passados parametros para atualizar");
                 }
                 nomeAtual = results[0].nome;
@@ -208,8 +221,10 @@ sirtp2db.updateDadosProduto = (body) => {
                 generoAtual = results[0].genero;
                 ativoAtual = results[0].ativo;
                 imagemAtual = results[0].imagem;
-                idAtual = body.id;
-
+                imagemAtualDest = results[0].imagemDestaque;
+                idAtual = id;
+                console.log("ATIVO body: "+body.ativo);
+                console.log("ATIVO Atual: "+ativoAtual);
                 if(body.nome != null && body.nome != '') {
                     nomeAtual = body.nome;
                 }
@@ -237,28 +252,33 @@ sirtp2db.updateDadosProduto = (body) => {
                 if(body.genero != null && body.genero != '') {
                     generoAtual = body.genero;
                 }
-                if(body.ativo != null && body.ativo != '') {
+                if(body.ativo != ativoAtual) {
+                    console.log("CHECK");
                     ativoAtual = body.ativo;
                 }
                 if(body.imagem != null && body.imagem != '') {
                     imagemAtual = body.imagem;
                 }
-
+                if(body.imagemDestaque != null && body.imagemDestaque != '') {
+                    imagemAtualDest = body.imagemDestaque;
+                }
+                console.log("ATIVOAtual After: "+ativoAtual);
                 updateDados(nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual, 
-                    consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual).then((res) => {
-                    resolve("Dados Atualizados Com Sucesso");
+                    consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, imagemAtualDest, idAtual).then((res) => {
+                        
+                    resolve(res);
                 }); 
             }
         });
     });
 
     async function updateDados(nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual, 
-        consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual) {
+        consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, imagemAtualDest, idAtual) {
         return await new Promise((resolve,reject) => {
             pool.query(`UPDATE produto SET nome = ?, categoria = ?, preco = ?, stock = ?, descricao = ?, plataforma = ?,
-                         consola = ?, classificacao = ?, genero = ?, ativo = ?, imagem = ? WHERE id = ?`,
+                         consola = ?, classificacao = ?, genero = ?, ativo = ?, imagem = ?, imagemDestaque = ? WHERE id = ?`,
                          [nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual,
-                         consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, idAtual],(err, results) => {
+                         consolaAtual, classificacaoAtual, generoAtual, ativoAtual, imagemAtual, imagemAtualDest, idAtual],(err, results) => {
                 if(err) {
                     reject(err);
                 }
@@ -282,10 +302,10 @@ sirtp2db.updateStockProdutoAfterSale = (id) => {
 
 };
 
-sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo) => {
+sirtp2db.insertProduto = (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, imagemDestaque, ativo) => {
 
     return new Promise((resolve,reject) => {
-        pool.query(`INSERT INTO produto (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, ativo],(err, results) => {
+        pool.query(`INSERT INTO produto (nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, imagemDestaque, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [nome, categoria, preco, stock, descricao, plataforma, consola, classificacao, genero, imagem, imagemDestaque, ativo],(err, results) => {
             if(err) {
                 return reject(err);
             }

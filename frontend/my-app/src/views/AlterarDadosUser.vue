@@ -16,13 +16,10 @@
 </template>
 
 <script>
-import AlterarUser from "../components/AlterarUser.vue";
+
 import axios from "axios";
 export default {
   name: "AlterarDadosUser",
-  components: {
-    AlterarUser
-  },
   data() {
     return {
       allEmails: [],

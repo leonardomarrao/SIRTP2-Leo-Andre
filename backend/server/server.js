@@ -35,6 +35,18 @@ app.get('/produto/display/', async(req, res) => {
 
 });
 
+app.get('/produto/nomes/', async(req, res) => {
+
+    try {
+        let results = await db.getProdutoNomes();
+        res.json(results);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+
+});
+
 app.get('/produto/display/plataforma/:plataforma', async(req, res) => {
 
     try {
@@ -131,9 +143,9 @@ app.get('/produto/id/:id', async(req, res) => {
 
 });
 
-app.put('/produto/:id/updateDadosProduto', async(req, res) => {
+app.put('/produto/updateDadosProduto/:id', async(req, res) => {
     try {
-        let results = await db.updateDadosProduto(req.body);
+        let results = await db.updateDadosProduto(req.body, req.params.id);
         res.json(results);
     } catch (error) {
         console.log(error);
@@ -155,7 +167,7 @@ app.put('/produto/:id/updatestockcompra', async(req, res) => {
 
 app.post('/produto/insert', async(req, res) => {
     try {
-        let results = await db.insertProduto(req.body.nome, req.body.categoria, req.body.preco, req.body.stock, req.body.descricao, req.body.plataforma, req.body.consola, req.body.classificacao, req.body.genero, req.body.imagem, req.body.ativo);
+        let results = await db.insertProduto(req.body.nome, req.body.categoria, req.body.preco, req.body.stock, req.body.descricao, req.body.plataforma, req.body.consola, req.body.classificacao, req.body.genero, req.body.imagem, req.body.imagemDestaque, req.body.ativo);
         res.json(results);
     } catch (error) {
         console.log(error);

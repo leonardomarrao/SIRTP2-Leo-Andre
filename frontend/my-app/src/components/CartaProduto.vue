@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{path: '/produto/' + this.produto.id}" tag="div">
   <div class="card">
-    <img class="img" :src="dataUrl" />
+    <img class="imgCartaProduto" :src="dataUrl" />
     <br />
     <div class="container">
         <p class="nome">{{ produto.nome }}</p>
@@ -41,9 +41,11 @@ export default {
 </script>
 
 <style >
-.img {
+.imgCartaProduto {
   height: 300px;
   width: 200px;
+  padding-top: 10px;
+  border-radius: 10px;
 }
 .card {
   margin: 30px;
