@@ -29,16 +29,16 @@ export default {
   width: 200px;
   height: fit-content;
   color:white;
-  margin-left: 700px;
+  margin-left: 10px;
+  border: 20px white;
 }
 .caixaComentario{
     
     text-align: left;
-    width: 500px;
+    width: 780px;
     height: fit-content;
     background-color: rgb(31, 30, 30);
     border: 2px white;
-    border-radius: 5px;
 }
 
 #actualComentario {
@@ -51,7 +51,7 @@ export default {
 }
 
 #usernameCom{
-    margin-right: 130px;
+    margin-right: 170px;
     font-size: 20px;
 }
 

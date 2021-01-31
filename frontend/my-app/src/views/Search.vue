@@ -131,7 +131,7 @@ export default {
 }
 
 option {
-  font-family: Kenyan;
+  font-family: 'Kenyan';
   border-color: transparent;
   border-radius: 5px;
   overflow: hidden;

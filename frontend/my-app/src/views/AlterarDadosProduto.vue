@@ -131,21 +131,26 @@ export default {
       if (!files.length)
         return;
       this.createImage(files[0]);
+      
+      this.image = files[0];
+       
     },
     createImage(file) {
       var image = new Image();
       var reader = new FileReader();
       var vm = this;
-
       reader.onload = (e) => {
         vm.image = e.target.result;
       };
       reader.readAsDataURL(file);
+      
+      this.image = file;
+
     },
     removeImage: function (e) {
       this.image = '';
     },
-    getProducts() {    
+    getProducts() {   
       axios({
         method: "get",
         url: `http://localhost:3000/produto/id/` + this.idproduto,
@@ -173,7 +178,6 @@ export default {
             }
         }
         if(existeNome == false) {
-                    
                     axios({
                         method: "put",
                         url: `http://localhost:3000/produto/updateDadosProduto/` + this.$route.params.id,
@@ -188,13 +192,14 @@ export default {
                             ativo: ativar,
                             categoria: this.categoria,
                             descricao: this.descricao,
-                            imagem: this.imagem,
+                            imagem: this.file,
                             imagemDestaque: this.imagemDestaque,
                         }
                     }).then((response) => {
                         this.produto = response.data;
                         window.alert("Dados de produto atualizados com sucesso!");
                         this.$router.push('/admArea');
+
                     })
                     
         } else {

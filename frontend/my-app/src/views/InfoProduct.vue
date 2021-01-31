@@ -84,7 +84,7 @@ export default {
 .todosComentarios{
   background-color: black;
   height: fit-content;
-  width: fit-content;
+  width: 800px;
   margin: auto;
 }
 
