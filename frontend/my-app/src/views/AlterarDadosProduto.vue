@@ -173,8 +173,8 @@ export default {
                     fd.append("ativo", ativar);
                     fd.append("categoria", this.categoria);
                     fd.append("descricao", this.descricao);
-                    fd.append("image", this.files);
-                    fd.append("imagemDestaque", this.imagemDestaque);
+                    
+                    
                     console.log(Array.from(fd));
                     await axios.put(`http://localhost:3000/produto/updateDadosProduto/` + this.$route.params.id, Array.from(fd)).then((response) => {
                         this.produto = response.data;

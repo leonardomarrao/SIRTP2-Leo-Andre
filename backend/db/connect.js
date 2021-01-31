@@ -208,8 +208,7 @@ sirtp2db.updateDadosProduto = (body, id) => {
                     && body[7][1] != null && body[7][1] != '' 
                     && body[8][1] != null && body[8][1] != '' 
                     && body[9][1] != null && body[9][1] != '' 
-                    && body[10][1] != null && body[10][1] != ''
-                    && body[11][1] != null && body[11][1] != '') {
+                    ) {
                     reject("Nao foram passados parametros para atualizar");
                 }
                 nomeAtual = results[0].nome;
@@ -259,12 +258,7 @@ sirtp2db.updateDadosProduto = (body, id) => {
                 if(body[9][1] != null && body[9][1] != '') {
                     descricaoAtual = body[9][1];
                 }
-                if(body[10][1] != null && body[10][1] != '') {
-                    imagemAtual = body[10][1];
-                }
-                if(body[11][1] != null && body[11][1] != '') {
-                    imagemAtualDest = body[11][1];
-                }
+                
                 console.log("ATIVOAtual After: "+ativoAtual);
                 
                  updateDados(nomeAtual, categoriaAtual, precoAtual, stockAtual, descricaoAtual, plataformaAtual, 
