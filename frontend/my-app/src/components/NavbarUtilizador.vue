@@ -27,7 +27,6 @@ export default {
 <style>
 .btnUT {
   text-decoration: none;
-  
 }
 .textoNavbarUt{
 color: white;
@@ -54,7 +53,6 @@ nav .menu-itemUT {
   border-bottom: 3px solid transparent;
   display: flex;
   transition: 0.4;
-  
 }
 
 #FavoritosNav {

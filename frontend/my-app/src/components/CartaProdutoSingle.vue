@@ -280,7 +280,8 @@ export default {
   background-color: rgb(255, 255, 255);
   margin-left: 0;
   font-family: Kenyan;
-  font-size: 22px;
+  font-size: 35px;
+  height: 60px;
   color: black;
   border: 2px solid black;
 }

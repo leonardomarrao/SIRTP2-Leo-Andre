@@ -80,7 +80,7 @@
 
     <div>
         <div id="app">
-            <div v-if="!image">
+            <div v-if="!files" class="imagemAlterar">
                 <h2>Select an image</h2>
                 <input type="file" @change="onFileChange">
             </div>
@@ -114,9 +114,10 @@ export default {
       ativo: "",
       categoria: "",
       descricao: "",
-      imagem: "",
-      imagemDestaque: "",
-      image: '',
+      imagem: null,
+      imagemDestaque: null,
+      image: [],
+      files: null,
     };
   },
   mounted() {
@@ -126,26 +127,8 @@ export default {
   methods: {
       // https://codepen.io/Atinux/pen/qOvawK/
       // encodedImage := base64.StdEncoding.EncodeToString(imageFile)
-    onFileChange(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.createImage(files[0]);
-      
-      this.image = files[0];
-       
-    },
-    createImage(file) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
-      reader.onload = (e) => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
-      
-      this.image = file;
-
+    onFileChange(event) {
+      this.files = event.target.files[0];
     },
     removeImage: function (e) {
       this.image = '';
@@ -166,7 +149,7 @@ export default {
         this.nomesLista = response.data;
       }) 
     },
-    alterarDados() {
+    async alterarDados() {
         var ativar = 0;
         var existeNome = false;
         if(this.ativo == true) {
@@ -178,29 +161,28 @@ export default {
             }
         }
         if(existeNome == false) {
-                    axios({
-                        method: "put",
-                        url: `http://localhost:3000/produto/updateDadosProduto/` + this.$route.params.id,
-                        data: {
-                            nome: this.nome,
-                            plataforma: this.plataforma,
-                            genero: this.genero,
-                            consola: this.consola,
-                            classificacao: this.classificacao,
-                            stock: this.stock,
-                            preco: this.preco,
-                            ativo: ativar,
-                            categoria: this.categoria,
-                            descricao: this.descricao,
-                            imagem: this.file,
-                            imagemDestaque: this.imagemDestaque,
-                        }
-                    }).then((response) => {
+                    
+                    const fd = new FormData();
+                    fd.append("nome", this.nome);
+                    fd.append("plataforma", this.plataforma);
+                    fd.append("genero", this.genero);
+                    fd.append("consola", this.consola);
+                    fd.append("classificacao", this.classificacao);
+                    fd.append("stock", this.stock);
+                    fd.append("preco", this.preco);
+                    fd.append("ativo", ativar);
+                    fd.append("categoria", this.categoria);
+                    fd.append("descricao", this.descricao);
+                    fd.append("image", this.files);
+                    fd.append("imagemDestaque", this.imagemDestaque);
+                    console.log(Array.from(fd));
+                    await axios.put(`http://localhost:3000/produto/updateDadosProduto/` + this.$route.params.id, Array.from(fd)).then((response) => {
                         this.produto = response.data;
                         window.alert("Dados de produto atualizados com sucesso!");
                         this.$router.push('/admArea');
-
+                     
                     })
+                   
                     
         } else {
             window.alert("Nome indisponivel!");

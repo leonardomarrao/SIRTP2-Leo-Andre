@@ -9,7 +9,7 @@
     <input class="alterarDados" v-model="email" placeholder="Alterar Email..."/>
     <input class="alterarDados" v-model="nome" placeholder="Alterar Nome..."/>
     <p class="pOfPassAtual">Palavra chave atual necessaria para efetuar mudanças</p>
-    <input class="alterarDados" v-model="passwordAtual" placeholder="Palavra chave atual..."/>
+    <input type="password"  class="alterarDados" v-model="passwordAtual" placeholder="Palavra chave atual..."/>
     <button class="btnAlterarDados" v-on:click="alterarDados()">Alterar Dados</button><br />
     <router-link :to="{path: '/infouser'}" tag="button" class="btnAlterarDados">Voltar</router-link>
   </div>
